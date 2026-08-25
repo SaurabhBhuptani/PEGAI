@@ -70,7 +70,7 @@ Generated images can be previewed and downloaded as PNG files.
 
 ### Main Interface
 
-![Main Chat Interface](Project_Enhancement/images/main.png)
+![Main Chat Interface](Project_Enhancement/images/main)
 
 ### AI Modes
 
