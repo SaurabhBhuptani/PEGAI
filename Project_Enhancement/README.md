@@ -1,4 +1,4 @@
-# 🤖 Gemini Smart Chatbot
+# 🤖 Multimodal AI Assistant
 
 A multimodal AI assistant built with **Python, Streamlit, LangGraph, Google Gemini, Hugging Face Inference Providers, and SQLite**.
 
@@ -461,30 +461,6 @@ http://localhost:8501
 
 ---
 
-# 🔐 Security
-
-API keys should never be hard-coded into Python files or committed to GitHub.
-
-Your `.gitignore` should include:
-
-```gitignore
-venv/
-.env
-__pycache__/
-*.pyc
-chatbot.db
-```
-
-Never commit:
-
-```text
-.env
-```
-
-If an API key is exposed publicly, revoke it and generate a replacement.
-
----
-
 # 🧪 Example Usage
 
 ## General Assistant
@@ -581,27 +557,6 @@ Use the delete control beside a previous conversation to remove that chat.
 
 ---
 
-# 📊 Feature Summary
-
-| Feature                   | Status |
-| ------------------------- | ------ |
-| Gemini Chat               | ✅      |
-| Streaming Responses       | ✅      |
-| General Assistant         | ✅      |
-| Code Assistant            | ✅      |
-| Image Generator           | ✅      |
-| Image Analysis            | ✅      |
-| Code/Text File Input      | ✅      |
-| Code Generation           | ✅      |
-| Code Download             | ✅      |
-| Chat Search               | ✅      |
-| Chat Deletion             | ✅      |
-| Multiple Chat Threads     | ✅      |
-| Persistent SQLite History | ✅      |
-| Prompt Engineering        | ✅      |
-
----
-
 # ⚠️ Current Limitations
 
 * API usage is subject to provider quotas, limits, and availability.
@@ -661,7 +616,7 @@ Marwadi University
 GitHub:
 
 ```text
-https://github.com/YOUR_USERNAME
+https://github.com/SaurabhBhuptani
 ```
 
 ---
@@ -669,8 +624,6 @@ https://github.com/YOUR_USERNAME
 # 📄 License
 
 This project is primarily intended for educational and academic purposes.
-
-If you would like to release it as open source, add an appropriate license such as the MIT License.
 
 ---
 
