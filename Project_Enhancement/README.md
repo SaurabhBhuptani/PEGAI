@@ -68,8 +68,6 @@ Generated images can be previewed and downloaded as PNG files.
 
 ## 📸 Screenshots
 
-> Replace the placeholder paths below with your actual screenshots after adding them to the `images/` folder.
-
 ### Main Interface
 
 ![Main Chat Interface](images/main-interface.png)
@@ -374,19 +372,7 @@ Project/
 ├── app.py
 ├── backend.py
 ├── .env
-├── .gitignore
 ├── chatbot.db
-│
-├── images/
-│   ├── main-interface.png
-│   ├── ai-modes.png
-│   ├── chat-search.png
-│   ├── chat-delete.png
-│   ├── code-assistant.png
-│   ├── code-file-analysis.png
-│   ├── image-analysis.png
-│   └── image-generator.png
-│
 └── venv/
 ```
 
@@ -405,7 +391,7 @@ cd YOUR_REPOSITORY
 
 Replace the placeholders with your actual GitHub repository.
 
----
+
 
 ## 2. Create a virtual environment
 
@@ -421,7 +407,7 @@ Activate it:
 venv\Scripts\Activate.ps1
 ```
 
----
+
 
 ## 3. Install dependencies
 
@@ -429,7 +415,7 @@ venv\Scripts\Activate.ps1
 pip install -U streamlit langgraph langgraph-checkpoint-sqlite langchain-google-genai python-dotenv huggingface_hub
 ```
 
----
+
 
 ## 4. Configure API keys
 
@@ -445,7 +431,7 @@ The application uses:
 * `GEMINI_API_KEY` for Gemini-powered features.
 * `HF_TOKEN` for Hugging Face image generation.
 
----
+
 
 ## 5. Start the application
 
@@ -477,7 +463,7 @@ Ask:
 Explain normalization in DBMS with examples.
 ```
 
----
+
 
 ## Code Assistant
 
@@ -499,7 +485,7 @@ You can also upload a source file and request:
 Find bugs and provide corrected code.
 ```
 
----
+
 
 ## Image Understanding
 
@@ -509,7 +495,7 @@ Upload an image and ask:
 Explain this diagram in simple terms.
 ```
 
----
+
 
 ## Image Generation
 
@@ -528,7 +514,7 @@ cinematic digital art.
 
 The image is generated and can be downloaded as a PNG.
 
----
+
 
 ## Chat Search
 
@@ -549,7 +535,7 @@ Gemini
 
 The application searches stored conversation titles and message content.
 
----
+
 
 ## Chat Deletion
 
