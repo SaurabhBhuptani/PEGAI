@@ -1,4 +1,4 @@
-# 🤖 Gemini Smart Chatbot
+# 🤖 Multimodal AI Assistant
 
 A multimodal AI chatbot built with **Python, Streamlit, LangGraph, Google Gemini, SQLite, and Hugging Face Inference Providers**.
 
