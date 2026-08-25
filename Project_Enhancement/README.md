@@ -1,175 +1,42 @@
-# 🤖 Multimodal AI Assistant
+# 🤖 Gemini Smart Chatbot
 
-A multimodal AI chatbot built with **Python, Streamlit, LangGraph, Google Gemini, SQLite, and Hugging Face Inference Providers**.
+A multimodal AI assistant built with **Python, Streamlit, LangGraph, Google Gemini, Hugging Face Inference Providers, and SQLite**.
 
-The project combines conversational AI, prompt engineering, code assistance, file analysis, image understanding, image generation, and persistent conversation management in a single beginner-friendly application.
-
----
-
-## 📸 Project Preview
-
-### 🏠 Main Chat Interface
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Main Chat Interface](images/main-interface.png)
-
-> **Screenshot placeholder:** Add a screenshot of the main Streamlit chatbot interface here.
-
----
-
-### ⚙️ AI Modes
-
-<!-- Replace this placeholder with your screenshot -->
-
-![AI Modes](images/ai-modes.png)
-
-The application currently provides two response modes:
-
-* **General Assistant** — general-purpose conversational assistance.
-* **Code Assistant** — programming-focused explanations, debugging, code generation, and code improvement.
-
----
-
-### 🔍 Chat Search
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Chat Search](images/chat-search.png)
-
-Search previous conversations by:
-
-* Chat title
-* Message content
-* Matching conversation snippets
-
----
-
-### 🗑️ Chat Deletion
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Chat Deletion](images/chat-delete.png)
-
-Users can delete individual conversation threads without affecting other chats.
-
----
-
-### 💻 Code File Analysis
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Code File Analysis](images/code-file-analysis.png)
-
-Upload supported programming/text files and ask the Code Assistant to:
-
-* Explain code
-* Debug code
-* Find errors
-* Refactor code
-* Improve code
-* Generate revised code
-
-The generated code can be downloaded directly from the application.
-
----
-
-### 🖼️ Image Understanding
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Image Analysis](images/image-analysis.png)
-
-Upload an image and ask Gemini questions about its content.
-
-Example:
-
-> "Explain this diagram."
-
----
-
-### 🎨 Image Generation
-
-<!-- Replace this placeholder with your screenshot -->
-
-![Image Generation](images/image-generation.png)
-
-Generate images from natural-language descriptions using **Hugging Face Inference Providers**.
-
-Example:
-
-> "A futuristic university campus surrounded by mountains at sunset, cinematic digital art."
-
-Generated images can be downloaded as PNG files.
+The application combines conversational AI, prompt-engineered response modes, programming assistance, code-file analysis, image understanding, image generation, and persistent chat management in a lightweight Streamlit application.
 
 ---
 
 ## ✨ Features
 
-### 💬 AI Conversation
+### 🧠 Three AI Modes
 
-* Natural-language conversation using Google Gemini.
-* Streaming AI responses.
-* Persistent conversation context.
-* Multiple independent chat threads.
-* New-chat creation.
-* Previous conversation loading.
+The chatbot supports three task-specific modes:
 
-### 🧠 Prompt-Engineered Response Modes
+#### 💬 General Assistant
 
-#### General Assistant
-
-Designed for:
+For:
 
 * General questions
 * Explanations
 * Learning
 * Summaries
-* Everyday assistance
+* Everyday conversations
 
-#### Code Assistant
+Powered by **Google Gemini**.
 
-Designed for:
+#### 💻 Code Assistant
 
-* Programming questions
-* Debugging
+For:
+
 * Code explanation
+* Debugging
+* Error analysis
 * Code generation
-* Refactoring
 * Code improvement
+* Refactoring
+* Code-file analysis
 
-The assistant behavior changes dynamically according to the selected mode.
-
----
-
-### 🔎 Searchable Chat History
-
-Search through stored conversations using:
-
-* Conversation titles
-* User messages
-* Assistant messages
-* Matching text snippets
-
-Chat search is performed locally using SQLite-backed conversation data and does not require an additional AI or vector-search service.
-
----
-
-### 🗑️ Conversation Management
-
-Users can:
-
-* Create new conversations.
-* Open existing conversations.
-* Search conversations.
-* Delete individual conversations.
-* Continue previous conversations.
-
----
-
-### 📁 Code/Text File Input
-
-Supported extensions currently include:
+Supports source/text files such as:
 
 ```text
 .py
@@ -185,121 +52,168 @@ Supported extensions currently include:
 .txt
 ```
 
-Uploaded files are read as text and provided as context to the Code Assistant.
+Generated or revised code can be downloaded directly.
 
-The application does **not execute uploaded code**.
+#### 🎨 Image Generator
 
----
+Generate images from natural-language descriptions using **Hugging Face Inference Providers** and a supported image-generation model.
 
-### 📥 Code Output
+Example:
 
-When Gemini returns code in Markdown code blocks, the application extracts the code and provides a download button.
+> A futuristic university campus surrounded by mountains at sunset, cinematic digital art.
 
-This allows workflows such as:
-
-```text
-Upload source file
-        ↓
-Code Assistant
-        ↓
-Analyze / Debug / Improve
-        ↓
-Generated code
-        ↓
-Download revised file
-```
+Generated images can be previewed and downloaded as PNG files.
 
 ---
 
-### 🖼️ Image Input
+## 📸 Screenshots
 
-Supported image formats:
+> Replace the placeholder paths below with your actual screenshots after adding them to the `images/` folder.
+
+### Main Interface
+
+![Main Chat Interface](images/main-interface.png)
+
+### AI Modes
+
+![AI Modes](images/ai-modes.png)
+
+### Chat Search
+
+![Chat Search](images/chat-search.png)
+
+### Chat Deletion
+
+![Chat Deletion](images/chat-delete.png)
+
+### Code Assistant
+
+![Code Assistant](images/code-assistant.png)
+
+### Code File Analysis
+
+![Code File Analysis](images/code-file-analysis.png)
+
+### Image Analysis
+
+![Image Analysis](images/image-analysis.png)
+
+### Image Generator
+
+![Image Generator](images/image-generator.png)
+
+---
+
+## 🧩 Core Capabilities
+
+### 💬 Conversational AI
+
+* Google Gemini-powered conversations
+* Streaming responses
+* Persistent conversation context
+* Multiple independent chat threads
+* Create new chats
+* Open previous chats
+* Continue existing conversations
+
+### 🔎 Chat Search
+
+Search stored conversations using:
+
+* Chat titles
+* User messages
+* Assistant responses
+
+Search results provide a matching conversation and a relevant content snippet.
+
+### 🗑️ Chat Deletion
+
+Individual conversations can be deleted from the sidebar.
+
+Deleting the currently active conversation automatically creates a fresh chat.
+
+### 📁 Code/Text File Input
+
+Upload supported source-code or text files and use them as context for the Code Assistant.
+
+Example workflow:
 
 ```text
-PNG
-JPG
-JPEG
-WEBP
+Upload calculator.py
+        ↓
+Select Code Assistant
+        ↓
+"Find the errors and improve this code."
+        ↓
+Gemini
+        ↓
+Corrected code
+        ↓
+Download
 ```
 
-Images can be uploaded and analyzed using Gemini's multimodal capabilities.
+Uploaded code is treated as text and **is not executed by the application**.
+
+### 🖼️ Image Understanding
+
+Upload an image and ask questions about it using Gemini's multimodal capabilities.
 
 Examples:
 
-* Explain diagrams.
-* Analyze screenshots.
-* Interpret visual content.
-* Ask questions about an image.
-* Understand educational figures.
-
----
+* Explain a diagram
+* Analyze a screenshot
+* Describe visual content
+* Identify information in an image
+* Explain an educational figure
 
 ### 🎨 Image Generation
 
-Image generation is implemented separately from the Gemini conversational model.
-
-The application uses:
+Image generation is implemented as an AI response mode rather than a separate tool.
 
 ```text
-Hugging Face Inference Providers
-        ↓
-Qwen-Image
-        ↓
-Generated Image
+AI Mode
+├── General Assistant
+├── Code Assistant
+└── Image Generator
 ```
 
-The generated image can be displayed in Streamlit and downloaded as a PNG.
-
-> **Note:** Hugging Face Inference Provider usage is subject to the account's current credits, provider availability, and applicable limits.
+Selecting **Image Generator** changes the normal chat input into an image-generation workflow.
 
 ---
 
-### 💾 Persistent Conversation Storage
+# 🧠 Prompt Engineering
 
-Conversation state is stored using:
+Prompt engineering is an important part of the application.
 
-```text
-SQLite
-+
-LangGraph SQLite Checkpointing
-```
+The same overall chatbot interface can behave differently depending on the selected AI mode.
 
-This allows conversations to remain available after restarting the Streamlit application.
-
----
-
-## 🧠 Prompt Engineering
-
-Prompt engineering is a central part of this project.
-
-Instead of sending every request to the language model using the same instructions, the application dynamically selects task-specific prompts.
-
-### General Assistant Prompt
+### General Assistant Prompting
 
 The General Assistant is instructed to:
 
-* Provide clear and accurate answers.
-* Adapt the explanation depth to the question.
-* Use Markdown when useful.
-* Avoid unnecessary code.
+* Answer clearly and accurately
+* Adapt explanation depth
+* Use Markdown when useful
+* Avoid unnecessary code
+* Avoid inventing facts
 
-### Code Assistant Prompt
+### Code Assistant Prompting
 
 The Code Assistant is instructed to:
 
-* Identify programming languages when possible.
-* Explain the programming approach.
-* Analyze syntax, logical, and runtime issues.
-* Provide corrected or improved code.
-* Explain important changes.
-* Preserve the user's intent.
-* Never claim that code was executed unless it was actually executed.
+* Identify programming languages when possible
+* Explain programming approaches
+* Analyze syntax, logic, runtime, and design problems
+* Provide corrected or improved code
+* Explain important changes
+* Preserve the user's intent
+* Never claim code was executed unless it actually was
 
-### Image Generation Prompt Engineering
+### Image Generation Prompting
 
-User image descriptions are passed through an additional prompt-enhancement layer before being sent to the image-generation model.
+User image descriptions are enhanced before being sent to the image-generation model.
 
-The enhancement instructs the image model to consider:
+The enhancement provides additional instructions relating to:
 
 * Subject
 * Composition
@@ -311,140 +225,148 @@ The enhancement instructs the image model to consider:
 Conceptually:
 
 ```text
-User Image Description
-          ↓
+User Description
+       ↓
 Prompt Enhancement
-          ↓
-Structured Image Prompt
-          ↓
-Hugging Face Image Model
-          ↓
+       ↓
+Image Generation Prompt
+       ↓
+Hugging Face Inference
+       ↓
 Generated Image
 ```
 
 ---
 
-## 🏗️ System Architecture
+# 🏗️ Architecture
 
 ```text
-                           ┌──────────────────────┐
-                           │      Streamlit       │
-                           │      Web UI          │
-                           └──────────┬───────────┘
-                                      │
-                 ┌────────────────────┼────────────────────┐
-                 │                    │                    │
-                 ▼                    ▼                    ▼
-          Chat Management        AI Chat Modes       Image Generation
-                 │                    │                    │
-                 ▼                    ▼                    ▼
-              SQLite             LangGraph          Hugging Face
-                 │                    │              Inference API
-                 │                    ▼
-                 │              Google Gemini
-                 │                    │
-                 │            ┌───────┴────────┐
-                 │            │                │
-                 │       General Mode      Code Mode
-                 │
-                 └───────────────┐
-                                 ▼
-                         Persistent History
+                         ┌──────────────────────┐
+                         │      Streamlit       │
+                         │       Web UI         │
+                         └──────────┬───────────┘
+                                    │
+                         ┌──────────┴──────────┐
+                         │                     │
+                         ▼                     ▼
+                  AI Mode Selector       Chat Management
+                         │                     │
+          ┌──────────────┼──────────────┐     │
+          │              │              │     │
+          ▼              ▼              ▼     ├── Search
+       General         Code           Image   └── Delete
+       Assistant     Assistant       Generator
+          │              │              │
+          ▼              ▼              ▼
+       Gemini          Gemini       Hugging Face
+          │              │          Inference API
+          │              │              │
+          └──────────────┴──────────────┘
+                         │
+                         ▼
+                  SQLite / LangGraph
+                  Persistent History
 ```
 
 ---
 
-## 🔄 Chat Request Flow
-
-A normal chat request follows:
+# 🔄 General / Code Chat Flow
 
 ```text
 User
- ↓
+  ↓
 Streamlit
- ↓
-Selected AI Mode
- ↓
+  ↓
+Select AI Mode
+  ↓
 LangGraph
- ↓
-System Prompt
- ↓
-Conversation History
- ↓
+  ↓
+Mode-specific System Prompt
+  ↓
+Conversation Context
+  ↓
 Google Gemini
- ↓
+  ↓
 Streaming Response
- ↓
+  ↓
 Streamlit
- ↓
+  ↓
 SQLite Checkpoint
 ```
 
 ---
 
-## 💻 Code Analysis Flow
+# 🖼️ Image Analysis Flow
 
 ```text
-User uploads source file
-        ↓
-File validation
-        ↓
-Read file as text
-        ↓
-Code Assistant mode
-        ↓
-Dynamic prompt construction
-        ↓
+Upload Image
+     ↓
+Validate File
+     ↓
+Combine Image + User Question
+     ↓
 Google Gemini
-        ↓
-Analysis / corrected code
-        ↓
-Code extraction
-        ↓
-Download button
+     ↓
+Multimodal Response
 ```
 
 ---
 
-## 🖼️ Image Analysis Flow
+# 🎨 Image Generation Flow
 
 ```text
-User uploads image
+Select Image Generator
         ↓
-Validate image
+Enter Image Description
         ↓
-Convert image to supported request format
-        ↓
-Combine image + user question
-        ↓
-Google Gemini
-        ↓
-Multimodal response
-```
-
----
-
-## 🎨 Image Generation Flow
-
-```text
-User enters image description
-        ↓
-Prompt enhancement
+Prompt Enhancement
         ↓
 Hugging Face Inference Providers
         ↓
-Qwen-Image
+Image Model
         ↓
-Generated PIL image
+Generated Image
         ↓
-Streamlit preview
+Preview
         ↓
-PNG download
+Download PNG
 ```
 
 ---
 
-## 🗃️ Project Structure
+# 🔍 Chat Search Flow
+
+```text
+Search Query
+     ↓
+SQLite / LangGraph Conversations
+     ↓
+Search Titles + Message Content
+     ↓
+Matching Conversations
+     ↓
+Open Selected Chat
+```
+
+---
+
+# 🛠️ Tech Stack
+
+| Technology                           | Purpose                                       |
+| ------------------------------------ | --------------------------------------------- |
+| **Python**                           | Application logic                             |
+| **Streamlit**                        | Web interface                                 |
+| **LangGraph**                        | Conversation workflow and state               |
+| **LangChain**                        | LLM integration                               |
+| **Google Gemini API**                | General AI, coding, image understanding       |
+| **Hugging Face Inference Providers** | Image generation                              |
+| **Qwen-Image**                       | Image generation model used by the image mode |
+| **SQLite**                           | Persistent chat storage                       |
+| **python-dotenv**                    | Environment variable management               |
+
+---
+
+# 📁 Project Structure
 
 ```text
 Project/
@@ -455,53 +377,39 @@ Project/
 ├── .gitignore
 ├── chatbot.db
 │
-├── venv/
+├── images/
+│   ├── main-interface.png
+│   ├── ai-modes.png
+│   ├── chat-search.png
+│   ├── chat-delete.png
+│   ├── code-assistant.png
+│   ├── code-file-analysis.png
+│   ├── image-analysis.png
+│   └── image-generator.png
 │
-└── images/
-    ├── main-interface.png
-    ├── ai-modes.png
-    ├── chat-search.png
-    ├── chat-delete.png
-    ├── code-file-analysis.png
-    └── image-generation.png
+└── venv/
 ```
 
-> `chatbot.db` is created automatically when the application uses SQLite checkpointing.
+`chatbot.db` is created automatically when the application uses SQLite checkpointing.
 
 ---
 
-## 🛠️ Technologies Used
+# 🚀 Installation
 
-| Technology                           | Purpose                                                   |
-| ------------------------------------ | --------------------------------------------------------- |
-| **Python**                           | Core programming language                                 |
-| **Streamlit**                        | Web interface                                             |
-| **LangGraph**                        | Conversation-state and workflow management                |
-| **LangChain**                        | LLM integration                                           |
-| **Google Gemini API**                | Conversational AI, coding assistance, image understanding |
-| **Hugging Face Inference Providers** | Image generation                                          |
-| **Qwen-Image**                       | Text-to-image generation                                  |
-| **SQLite**                           | Persistent conversation storage                           |
-| **python-dotenv**                    | Environment-variable/API-key management                   |
-
----
-
-## 📦 Installation
-
-### 1. Clone the repository
+## 1. Clone the repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
 cd YOUR_REPOSITORY
 ```
 
-Replace `YOUR_USERNAME` and `YOUR_REPOSITORY` with your GitHub details.
+Replace the placeholders with your actual GitHub repository.
 
 ---
 
-### 2. Create a virtual environment
+## 2. Create a virtual environment
 
-Windows:
+### Windows
 
 ```powershell
 python -m venv venv
@@ -515,7 +423,7 @@ venv\Scripts\Activate.ps1
 
 ---
 
-### 3. Install dependencies
+## 3. Install dependencies
 
 ```powershell
 pip install -U streamlit langgraph langgraph-checkpoint-sqlite langchain-google-genai python-dotenv huggingface_hub
@@ -523,7 +431,7 @@ pip install -U streamlit langgraph langgraph-checkpoint-sqlite langchain-google-
 
 ---
 
-### 4. Configure environment variables
+## 4. Configure API keys
 
 Create a `.env` file in the project root:
 
@@ -532,17 +440,20 @@ GEMINI_API_KEY=YOUR_GEMINI_API_KEY
 HF_TOKEN=YOUR_HUGGINGFACE_TOKEN
 ```
 
-Never commit this file to GitHub.
+The application uses:
+
+* `GEMINI_API_KEY` for Gemini-powered features.
+* `HF_TOKEN` for Hugging Face image generation.
 
 ---
 
-### 5. Run the application
+## 5. Start the application
 
 ```powershell
 streamlit run app.py
 ```
 
-Open the local Streamlit URL shown in the terminal, normally:
+Then open the local Streamlit URL shown in the terminal, normally:
 
 ```text
 http://localhost:8501
@@ -550,43 +461,11 @@ http://localhost:8501
 
 ---
 
-## 🔐 Environment Variables
+# 🔐 Security
 
-The project requires:
+API keys should never be hard-coded into Python files or committed to GitHub.
 
-### `GEMINI_API_KEY`
-
-Used for:
-
-* General Assistant
-* Code Assistant
-* Image understanding
-
-Obtain the key from Google AI Studio.
-
-### `HF_TOKEN`
-
-Used for:
-
-* Image generation through Hugging Face Inference Providers
-
-Create a Hugging Face access token with the permissions required for Inference Providers.
-
----
-
-## ⚠️ Security
-
-Never hard-code API keys in Python files.
-
-Do **not** commit:
-
-```text
-.env
-```
-
-to GitHub.
-
-Recommended `.gitignore`:
+Your `.gitignore` should include:
 
 ```gitignore
 venv/
@@ -596,123 +475,19 @@ __pycache__/
 chatbot.db
 ```
 
-If an API key is accidentally exposed publicly, revoke it and create a new key immediately.
+Never commit:
+
+```text
+.env
+```
+
+If an API key is exposed publicly, revoke it and generate a replacement.
 
 ---
 
-## 🎯 Supported Use Cases
+# 🧪 Example Usage
 
-### General Assistant
-
-Example:
-
-```text
-Explain recursion in simple terms.
-```
-
-### Code Assistant
-
-Example:
-
-```text
-Why does this Python program produce an IndexError?
-```
-
-### Code File Analysis
-
-Example:
-
-```text
-Upload:
-calculator.py
-
-Prompt:
-Find the bugs and provide corrected code.
-```
-
-### Image Analysis
-
-Example:
-
-```text
-Upload:
-database_diagram.png
-
-Prompt:
-Explain this database diagram.
-```
-
-### Image Generation
-
-Example:
-
-```text
-A futuristic university campus surrounded by mountains
-at sunset, cinematic digital art.
-```
-
-### Chat Search
-
-Example:
-
-```text
-Search:
-LangGraph
-```
-
-The application searches stored conversation titles and message contents.
-
----
-
-## ✅ Feature Checklist
-
-* [x] Gemini-powered chatbot
-* [x] Streamlit interface
-* [x] LangGraph conversation management
-* [x] SQLite persistent history
-* [x] Multiple chat threads
-* [x] New chat creation
-* [x] Previous chat loading
-* [x] Streaming responses
-* [x] General Assistant mode
-* [x] Code Assistant mode
-* [x] Chat search
-* [x] Chat deletion
-* [x] Code/text file upload
-* [x] Code analysis
-* [x] Generated code download
-* [x] Image upload
-* [x] Image understanding
-* [x] Image generation
-* [x] Generated image download
-* [x] Environment-variable API keys
-* [x] File-size validation
-* [x] Error handling
-
----
-
-## 🔒 File and Code Safety
-
-Uploaded code is treated as text and sent to the AI for analysis.
-
-The application does **not** execute arbitrary uploaded source code.
-
-This allows users to safely ask the Code Assistant to:
-
-* Review code
-* Explain code
-* Find bugs
-* Refactor code
-* Improve code
-* Generate revised code
-
----
-
-## 🧪 Example Demonstration
-
-A complete demonstration can be performed using the following sequence:
-
-### 1. General Assistant
+## General Assistant
 
 Select:
 
@@ -723,12 +498,14 @@ General Assistant
 Ask:
 
 ```text
-Explain normalization in DBMS.
+Explain normalization in DBMS with examples.
 ```
 
-### 2. Code Assistant
+---
 
-Switch to:
+## Code Assistant
+
+Select:
 
 ```text
 Code Assistant
@@ -737,141 +514,189 @@ Code Assistant
 Ask:
 
 ```text
-Explain the following Python code and identify possible problems.
+Explain this Python code and identify any potential problems.
 ```
 
-### 3. Upload a Code File
-
-Upload:
+You can also upload a source file and request:
 
 ```text
-example.py
+Find bugs and provide corrected code.
 ```
 
-Ask:
+---
+
+## Image Understanding
+
+Upload an image and ask:
 
 ```text
-Find errors and provide an improved version.
+Explain this diagram in simple terms.
 ```
 
-Download the revised code.
+---
 
-### 4. Upload an Image
+## Image Generation
 
-Upload:
+Select:
 
 ```text
-diagram.png
+Image Generator
 ```
-
-Ask:
-
-```text
-Explain this diagram.
-```
-
-### 5. Generate an Image
 
 Enter:
 
 ```text
-A futuristic university campus at sunset,
-surrounded by mountains, cinematic digital art.
+A futuristic university campus surrounded by mountains at sunset,
+cinematic digital art.
 ```
 
-Generate and download the image.
-
-### 6. Search Conversations
-
-Search:
-
-```text
-normalization
-```
-
-Open the matching conversation.
-
-### 7. Delete Conversation
-
-Delete an unwanted chat from the sidebar.
+The image is generated and can be downloaded as a PNG.
 
 ---
 
-## 📚 Prompt Engineering Techniques Demonstrated
+## Chat Search
 
-This project demonstrates multiple prompt-engineering techniques:
-
-### Role Prompting
-
-Different instructions are used for:
+Use:
 
 ```text
-General Assistant
-Code Assistant
+🔍 Search Chats
 ```
 
-### Instruction Prompting
-
-The model is given explicit instructions about:
-
-* Response behavior
-* Explanation depth
-* Coding behavior
-* Formatting
-
-### Contextual Prompting
-
-Uploaded code and images are added as context for the user's request.
-
-### Task-Specific Prompting
-
-Different tasks receive specialized instructions.
-
-### Dynamic Prompt Composition
-
-The final request depends on:
+and search for terms such as:
 
 ```text
-Selected Mode
-+
-User Query
-+
-Conversation Context
-+
-Uploaded Content
+Python
+SQL
+LangGraph
+Gemini
 ```
 
-### Image Prompt Engineering
-
-Image descriptions are enhanced before being passed to the image-generation model.
+The application searches stored conversation titles and message content.
 
 ---
 
-## 📊 Project Objectives
+## Chat Deletion
 
-The primary objectives of this project are:
-
-1. Develop a practical AI chatbot using a modern LLM API.
-2. Demonstrate prompt engineering through task-specific response modes.
-3. Provide programming assistance through code-aware prompts.
-4. Support multimodal interaction through image input.
-5. Provide text-to-image generation through an external inference API.
-6. Improve conversation management using search and deletion.
-7. Maintain persistent conversations using SQLite and LangGraph.
-8. Provide a simple beginner-friendly user interface using Streamlit.
+Use the delete control beside a previous conversation to remove that chat.
 
 ---
 
+# 📊 Feature Summary
+
+| Feature                   | Status |
+| ------------------------- | ------ |
+| Gemini Chat               | ✅      |
+| Streaming Responses       | ✅      |
+| General Assistant         | ✅      |
+| Code Assistant            | ✅      |
+| Image Generator           | ✅      |
+| Image Analysis            | ✅      |
+| Code/Text File Input      | ✅      |
+| Code Generation           | ✅      |
+| Code Download             | ✅      |
+| Chat Search               | ✅      |
+| Chat Deletion             | ✅      |
+| Multiple Chat Threads     | ✅      |
+| Persistent SQLite History | ✅      |
+| Prompt Engineering        | ✅      |
+
 ---
 
-## 🌟 Why This Project?
+# ⚠️ Current Limitations
 
-The goal is not simply to create another chatbot.
+* API usage is subject to provider quotas, limits, and availability.
+* Image generation depends on Hugging Face Inference Provider availability and account credits.
+* Uploaded code is analyzed as text and is not executed.
+* Uploaded files are limited to the supported extensions and configured size limits.
+* Conversation history is stored locally in SQLite.
+* Generated images are kept in the current Streamlit session rather than being permanently stored in the conversation database.
+* The application currently supports two Gemini-based modes and one Hugging Face-based image-generation mode.
 
-The application combines several practical AI capabilities into one lightweight system:
+---
+
+# 🔮 Future Improvements
+
+Potential future additions:
+
+* [ ] AI-generated chat titles
+* [ ] Conversation summarization
+* [ ] Rename conversations
+* [ ] Regenerate responses
+* [ ] User feedback / ratings
+* [ ] More programming languages
+* [ ] PDF and DOCX analysis
+* [ ] Multiple image-generation styles
+* [ ] Image aspect-ratio selection
+* [ ] Web search
+* [ ] RAG
+* [ ] User authentication
+* [ ] Cloud database
+* [ ] Online deployment
+
+---
+
+# 🎯 Project Goals
+
+The project was designed to demonstrate how multiple AI capabilities can be combined into a simple web application.
+
+Main goals:
+
+1. Build a practical LLM-powered chatbot.
+2. Demonstrate prompt engineering using task-specific system prompts.
+3. Provide specialized programming assistance.
+4. Support multimodal image understanding.
+5. Add natural-language image generation.
+6. Provide searchable and deletable conversation history.
+7. Maintain persistent conversations with SQLite.
+8. Keep the application simple enough to run locally with Streamlit.
+
+---
+
+# 👨‍💻 Author
+
+**Saurabh Bhuptani**
+
+Marwadi University
+
+GitHub:
 
 ```text
-Conversation
+https://github.com/YOUR_USERNAME
+```
+
+---
+
+# 📄 License
+
+This project is primarily intended for educational and academic purposes.
+
+If you would like to release it as open source, add an appropriate license such as the MIT License.
+
+---
+
+# 🙏 Acknowledgements
+
+This project makes use of:
+
+* Google Gemini
+* LangChain
+* LangGraph
+* Streamlit
+* Hugging Face
+* Qwen
+* SQLite
+* Python
+
+---
+
+## ⭐ If You Find This Project Interesting
+
+Consider giving the repository a ⭐ and exploring the implementation.
+
+The project demonstrates how a simple Streamlit application can combine:
+
+```text
+LLM Chat
     +
 Prompt Engineering
     +
@@ -888,67 +713,4 @@ Chat Search
 Chat Management
     =
 Multimodal AI Assistant
-```
-
----
-
-## 👨‍💻 Author
-
-**Saurabh Bhuptani**
-
-Marwadi University
-
-> Add your GitHub profile link here.
-
-```text
-GitHub: https://github.com/SaurabhBhuptani
-```
-
----
-
-## 📄 License
-
-This project is intended primarily for educational and academic purposes.
-
-## ⭐ Acknowledgements
-
-This project uses the following technologies and services:
-
-* Google Gemini
-* LangChain
-* LangGraph
-* Streamlit
-* Hugging Face
-* Qwen
-* SQLite
-* Python
-
-Thank you to the open-source and AI developer communities that provide the frameworks, APIs, and tools used to build this project.
-
----
-
-## 🚀 Quick Start
-
-For experienced users:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
-python -m venv venv
-venv\Scripts\activate
-pip install -U streamlit langgraph langgraph-checkpoint-sqlite langchain-google-genai python-dotenv huggingface_hub
-streamlit run app.py
-```
-
-Then configure:
-
-```env
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-HF_TOKEN=YOUR_HUGGINGFACE_TOKEN
-```
-
-and open:
-
-```text
-http://localhost:8501
 ```
