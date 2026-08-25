@@ -70,35 +70,35 @@ Generated images can be previewed and downloaded as PNG files.
 
 ### Main Interface
 
-![Main Chat Interface](images/main-interface.png)
+![Main Chat Interface](images/Screenshot 2026-08-25 233947.png)
 
 ### AI Modes
 
-![AI Modes](images/ai-modes.png)
+![Main Chat Interface](images/Screenshot 2026-08-25 234103.png)
 
 ### Chat Search
 
-![Chat Search](images/chat-search.png)
-
-### Chat Deletion
-
-![Chat Deletion](images/chat-delete.png)
+![Chat Search](images/Screenshot 2026-08-25 235809.png)
 
 ### Code Assistant
 
-![Code Assistant](images/code-assistant.png)
+![Code Assistant](images/Screenshot 2026-08-25 234404.png)
+![Code Assistant](images/Screenshot 2026-08-25 234449.png)
+![Code Assistant](images/Screenshot 2026-08-25 234507.png)
 
 ### Code File Analysis
 
-![Code File Analysis](images/code-file-analysis.png)
+![Code File Analysis](images/Screenshot 2026-08-25 234937.png)
+![Code File Analysis](images/Screenshot 2026-08-25 234901.png)
 
 ### Image Analysis
 
-![Image Analysis](images/image-analysis.png)
+![Image Analysis](images/Screenshot 2026-08-25 235202.png)
+![Image Analysis](images/Screenshot 2026-08-25 235337.png)
 
 ### Image Generator
 
-![Image Generator](images/image-generator.png)
+![Image Generator](images/Screenshot 2026-08-25 235619.png)
 
 ---
 
