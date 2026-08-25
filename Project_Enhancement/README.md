@@ -847,40 +847,6 @@ Image descriptions are enhanced before being passed to the image-generation mode
 
 ---
 
-## 📈 Possible Future Enhancements
-
-Potential future improvements include:
-
-* [ ] AI-generated chat titles
-* [ ] Conversation summarization
-* [ ] Rename conversations
-* [ ] Regenerate response
-* [ ] User feedback / ratings
-* [ ] More programming languages
-* [ ] PDF document analysis
-* [ ] DOCX document support
-* [ ] Multiple image-generation styles
-* [ ] Image generation aspect-ratio selection
-* [ ] Web search
-* [ ] Retrieval-Augmented Generation (RAG)
-* [ ] User authentication
-* [ ] Cloud database
-* [ ] Deployment to Streamlit Community Cloud
-
----
-
-## 🚧 Current Limitations
-
-* Gemini and Hugging Face APIs require valid API credentials.
-* API quotas and rate limits depend on the provider and account.
-* Hugging Face image generation depends on current provider/model availability and account credits.
-* Uploaded source code is analyzed as text and is not executed.
-* Conversation data is stored locally in SQLite.
-* The application currently supports a limited list of file extensions.
-* Image generation requires a separate service from the Gemini conversational model.
-
----
-
 ## 📊 Project Objectives
 
 The primary objectives of this project are:
@@ -895,23 +861,6 @@ The primary objectives of this project are:
 8. Provide a simple beginner-friendly user interface using Streamlit.
 
 ---
-
-## 🎓 Academic Relevance
-
-This project demonstrates the practical application of:
-
-* Generative AI
-* Large Language Models
-* Prompt Engineering
-* Multimodal AI
-* Natural Language Processing
-* AI-assisted Programming
-* API Integration
-* State Management
-* Database Persistence
-* Human-AI Interaction
-
-The project particularly demonstrates how **prompt engineering can change the behavior of the same underlying language model according to the user's task**.
 
 ---
 
@@ -952,7 +901,7 @@ Marwadi University
 > Add your GitHub profile link here.
 
 ```text
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/SaurabhBhuptani
 ```
 
 ---
@@ -960,16 +909,6 @@ GitHub: https://github.com/YOUR_USERNAME
 ## 📄 License
 
 This project is intended primarily for educational and academic purposes.
-
-You may add a specific open-source license here, such as:
-
-```text
-MIT License
-```
-
-after deciding how you want others to use the project.
-
----
 
 ## ⭐ Acknowledgements
 
@@ -1013,22 +952,3 @@ and open:
 ```text
 http://localhost:8501
 ```
-
----
-
-## 🖼️ Suggested GitHub Screenshots
-
-For the best-looking repository, add these files inside an `images/` folder:
-
-```text
-images/
-├── main-interface.png
-├── ai-modes.png
-├── chat-search.png
-├── chat-delete.png
-├── code-file-analysis.png
-├── image-analysis.png
-└── image-generation.png
-```
-
-Then replace the placeholder images in this README with your actual screenshots.
