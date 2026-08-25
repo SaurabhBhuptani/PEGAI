@@ -70,35 +70,35 @@ Generated images can be previewed and downloaded as PNG files.
 
 ### Main Interface
 
-![Main Chat Interface](images/Screenshot 2026-08-25 233947.png)
+![Main Chat Interface](images/Screenshot%2026-08-25%233947.png)
 
 ### AI Modes
 
-![Main Chat Interface](images/Screenshot 2026-08-25 234103.png)
+![Main Chat Interface](images/Screenshot%2026-08-25%234103.png)
 
 ### Chat Search
 
-![Chat Search](images/Screenshot 2026-08-25 235809.png)
+![Chat Search](images/Screenshot%2026-08-25%235809.png)
 
 ### Code Assistant
 
-![Code Assistant](images/Screenshot 2026-08-25 234404.png)
-![Code Assistant](images/Screenshot 2026-08-25 234449.png)
-![Code Assistant](images/Screenshot 2026-08-25 234507.png)
+![Code Assistant](images/Screenshot%2026-08-25%234404.png)
+![Code Assistant](images/Screenshot%2026-08-25%234449.png)
+![Code Assistant](images/Screenshot%2026-08-25%234507.png)
 
 ### Code File Analysis
 
-![Code File Analysis](images/Screenshot 2026-08-25 234937.png)
-![Code File Analysis](images/Screenshot 2026-08-25 234901.png)
+![Code File Analysis](images/Screenshot%2026-08-25%234937.png)
+![Code File Analysis](images/Screenshot%2026-08-25%234901.png)
 
 ### Image Analysis
 
-![Image Analysis](images/Screenshot 2026-08-25 235202.png)
-![Image Analysis](images/Screenshot 2026-08-25 235337.png)
+![Image Analysis](images/Screenshot%2026-08-25%235202.png)
+![Image Analysis](images/Screenshot%2026-08-25%235337.png)
 
 ### Image Generator
 
-![Image Generator](images/Screenshot 2026-08-25 235619.png)
+![Image Generator](images/Screenshot%2026-08-25%235619.png)
 
 ---
 
