@@ -597,8 +597,6 @@ Main goals:
 
 **Saurabh Bhuptani**
 
-Marwadi University
-
 GitHub:
 
 ```text
