@@ -129,7 +129,7 @@ This keeps the app to **one Gemini request regardless of how many personas are s
 ## 11. Gemini API Integration
 
 - Endpoint: `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}`
-- Default model: `gemini-2.0-flash` — editable in the "Gemini model" field in the setup panel, since Google periodically renames/retires model versions. If a model name stops working, check Google's current model list and type the new name into that field.
+- Default model: `gemini-3.5-flash` — editable in the "Gemini model" field in the setup panel, since Google periodically renames/retires model versions. If a model name stops working, check Google's current model list and type the new name into that field.
 - Called directly from the browser (`fetch`), with the API key supplied at runtime by the student — no key is ever stored in the code or repository.
 
 ## 12. Application Architecture
@@ -158,138 +158,7 @@ Question Input ──► Persona Selection ──► Read Prompt Cards
                                      User Evaluation
 ```
 
-## 13. Repository Structure
-
-```
-project/
-│
-├── index.html      # Complete app: HTML + CSS + JavaScript
-├── README.md        # This file
-└── assets/          # Screenshots for this README (add your own)
-```
-
-`index.html` intentionally contains the entire implementation — no separate `style.css` or `script.js` files, per the assignment's single-file constraint.
-
-## 14. Complete Setup Instructions
-
-### Step 1 — Prerequisites
-- A modern browser (Chrome, Edge, Firefox, or Safari).
-- A free Google account to obtain a Gemini API key.
-- Optionally, Python or Node.js installed, to serve the file locally (see Step 6).
-
-### Step 2 — Obtain Gemini API access
-Get a free API key from **Google AI Studio** (`aistudio.google.com` → "Get API key"). Treat this key like a password. **Never commit it to GitHub.**
-
-### Step 3 — Clone/download the repository
-```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
-```
-
-### Step 4 — Inspect project structure
-- `index.html` — the entire application.
-- `README.md` — this documentation.
-- `assets/` — where you'll drop your own screenshots before submission.
-
-### Step 5 — Configure runtime API access
-This app deliberately does **not** ship with a key. Open `index.html` in your browser, expand the **"⚙ Gemini API setup"** panel at the top, and paste your key into the **"Your Gemini API key"** field. The key is held only in the page's JavaScript memory for that session — it is never written to disk, `localStorage`, or the repository.
-
-### Step 6 — Launch the application
-Some browsers restrict `fetch` requests from files opened directly as `file://`. Prefer a simple local server:
-
-**Beginner-friendly (Python, usually pre-installed):**
-```bash
-python3 -m http.server 8000
-```
-Then open `http://localhost:8000/index.html`.
-
-**Alternative (Node.js):**
-```bash
-npx serve .
-```
-
-You can also just double-click `index.html` — most current browsers will run it fine, but use the local-server method if you see network/CORS errors.
-
-### Step 7 — Open the app
-Navigate to the local URL from Step 6 (or open the file directly). You'll see the header, the API setup panel, the question box, and the four persona cards.
-
-### Step 8 — Select a persona
-Click any single persona card (e.g. "Technical Career Counsellor") to select it — it will highlight with a bold outline.
-
-### Step 9 — Ask a career question
-Type a question, e.g. *"I know Python and basic Machine Learning. What should I learn to become an AI Engineer?"* — or click one of the three sample-question chips to autofill.
-
-### Step 10 — Generate advice
-Click **Get Career Advice**. The button shows a loading spinner while Gemini responds; a single response card appears for your selected persona.
-
-### Step 11 — Use multiple personas
-Click additional persona cards before generating — try all four at once.
-
-### Step 12 — Compare results
-With two or more personas selected, a **comparison table** appears beneath the response cards, showing Main Recommendation / Priority / Suggested Action side by side.
-
-### Step 13 — Troubleshoot errors
-
-| Problem | What you'll see | Fix |
-|---|---|---|
-| No persona selected | "Please select at least one persona." | Select a persona card. |
-| Empty question | "Please enter your career-related question." | Type a question. |
-| Missing API key | Setup panel auto-opens with an error banner | Paste a valid key. |
-| Invalid key / wrong model name | "Gemini rejected the request…" | Re-check the key and model field. |
-| Network/CORS failure | "Could not reach the Gemini API…" | Serve via local HTTP server (Step 6); check your connection. |
-| Rate limiting | "Gemini is rate-limiting requests…" | Wait, then retry. |
-| Unexpected/empty response | "Gemini returned an empty response…" / "…unexpected format…" | Retry, or rephrase the question. |
-
-### Step 14 — Run the test cases
-See Section 15 below.
-
-### Step 15 — Prepare GitHub submission
-Commit `index.html`, `README.md`, and your `assets/` screenshots. **Do not** commit any file containing your real API key.
-
-### Step 16 — Prepare demo video
-See Section 18 checklist below.
-
-### Step 17 — Final submission
-See Section 19 checklist below.
-
-## 15. Testing Procedure
-
-Test with all three required questions, in both single- and multi-persona mode:
-
-1. *"Should I prepare for placements or pursue higher studies?"*
-2. *"I know Python but do not have any projects. What should I do?"*
-3. *"Should I become an AI Engineer, Data Scientist or Software Developer?"*
-
-For each question:
-- Run it against **one persona at a time** (all four, individually).
-- Run it against **all four personas together**.
-- Run it against **at least one other combination** (e.g. Technical + Entrepreneurship only).
-- Confirm the responses are structurally and substantively different — e.g. for Question 1, the Technical counsellor should foreground DSA/projects, HR should foreground employability signals, Academic should foreground research/postgrad fit, and Entrepreneurship should foreground opportunity cost of building vs. studying.
-
-Record your actual observations (screenshots or notes) here before submission.
-
-## 16. Error Handling
-
-Implemented for: no persona selected, empty question, missing API key, invalid API key, network failure, invalid/unexpected JSON, empty AI response, and HTTP 429 rate limiting. All errors are shown as a readable banner near the Generate button — the app never crashes to a blank screen, and no internal error detail beyond Gemini's own message is exposed.
-
-## 17. Demo Video Checklist
-
-- [ ] Show the application interface.
-- [ ] Show the four available personas and their focus areas.
-- [ ] Select one persona.
-- [ ] Enter a question.
-- [ ] Show the generated response.
-- [ ] Select multiple personas.
-- [ ] Ask the same question again.
-- [ ] Show the multiple generated responses.
-- [ ] Show the comparison section.
-- [ ] Briefly explain the Prompt Card (Role/Audience/Context/Format/Constraints/Language).
-- [ ] Briefly explain the prompt-construction flow (Section 8 above).
-- [ ] Demonstrate that multiple personas are handled in one Gemini request (e.g. show the Network tab with a single request for a multi-persona run).
-
-## 18. Screenshots
-
-*(Add your own screenshots to `assets/` before submitting, then these will render on GitHub.)*
+## 13. Screenshots
 
 ### Homepage
 ![Homepage Screenshot](assets/homepage.png)
@@ -306,67 +175,28 @@ Implemented for: no persona selected, empty question, missing API key, invalid A
 ### Comparison
 ![Persona Comparison](assets/persona-comparison.png)
 
-## Application Flow
-
-![Application Flow](assets/application-flow.png)
-
 ## Demo
 
 [Watch Demo Video](YOUR_DEMO_VIDEO_LINK)
 
-## 19. Comparison Functionality
+## 14. Comparison Functionality
 
 When two or more personas are selected, the app renders a table with one column per persona and one row each for **Main Recommendation**, **Top Priority**, and **Suggested Next Action** — all populated from the same single Gemini response, not a separate summarization call.
 
-## 20. Limitations
+## 15. Limitations
 
-- The Gemini API key is entered and used client-side, which is appropriate for an educational single-page demo but is **not** a secure pattern for a real production app (see Section 21 — Security).
 - Persona differentiation depends on Gemini following the prompt; while the schema and instructions are designed to make convergence unlikely, no hard guarantee exists that two personas won't occasionally overlap on straightforward questions.
 - The comparison table summarizes each persona in three short fields — it is not a substitute for reading the full response.
 - No conversation memory: each question is a fresh request.
 
-## 21. Security — API Key Handling
-
-**Critical:** this repository contains **no real API key**. The app prompts the student for their key at runtime, and it is held only in browser memory for that page session (never written to `localStorage`, `sessionStorage`, cookies, or any file).
-
-However, because the Gemini request is made directly from the browser, the key **is technically visible** to anyone inspecting network traffic in that browser tab while the app is running. This is acceptable for a personal/educational demo run locally, but:
-- Never commit a real key to `.env`, source code, or GitHub.
-- Never deploy this pattern publicly with a real key pasted in by default.
-- For a production app, the correct pattern is a backend proxy that holds the key server-side — intentionally out of scope here per the assignment's "don't overengineer" constraint.
-
-## 22. Possible Future Improvements
+## 16. Possible Future Improvements
 
 - Optional backend proxy to fully hide the API key for public deployment.
 - Persona response history / session log.
 - Ability for students to define and save their own custom persona Prompt Cards.
 - Export comparison table as PDF/CSV.
 
-## 23. Team Members
-
-- *(List team members here.)*
-
-## 24. Final Submission Checklist
-
-- [ ] `index.html` works
-- [ ] HTML/CSS/JS are in one file
-- [ ] At least 4 personas exist
-- [ ] One persona works
-- [ ] Multiple personas work
-- [ ] Gemini API generates responses
-- [ ] Multi-persona mode uses one Gemini request
-- [ ] Persona responses are meaningfully different
-- [ ] Six Prompt Card elements are defined for every persona
-- [ ] Input validation works
-- [ ] API errors are handled
-- [ ] Required test questions tested (Section 15)
-- [ ] Screenshots added to `assets/`
-- [ ] Demo video prepared
-- [ ] Prompt Card documentation prepared (Section 6)
-- [ ] Team members listed (Section 23)
-- [ ] No real API key is committed
-- [ ] GitHub repository is ready for submission
-
-## 25. Learning Outcomes
+## 17. Learning Outcomes
 
 This project demonstrates:
 
@@ -382,5 +212,3 @@ And, for multiple personas:
 One User Question → Multiple Persona Instructions → One Efficient Gemini API Request
   → Multiple Distinct Perspectives → Meaningful Comparison
 ```
-
-The project's success is measured by the **quality of the persona prompt design** and the **meaningfulness of the differences** between persona outputs — not by chatbot novelty alone.
