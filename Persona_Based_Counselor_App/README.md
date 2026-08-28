@@ -220,7 +220,6 @@ Clone the repository using:
 
 ```bash
 git clone https://github.com/SaurabhBhuptani/PEGAI/tree/main/Persona_Based_Counselor_App.git
-cd Persona_Based_Counselor_App
 ```
 
 Then enter the project directory:
