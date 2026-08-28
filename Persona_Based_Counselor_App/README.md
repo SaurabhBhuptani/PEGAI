@@ -209,3 +209,206 @@ And, for multiple personas:
 One User Question → Multiple Persona Instructions → One Efficient Gemini API Request
   → Multiple Distinct Perspectives → Meaningful Comparison
 ```
+
+## 18. How to Use the Application
+
+This application is a client-side, single-page AI Career Counsellor powered by the Google Gemini API. GitHub users can run it locally and interact with multiple AI career-counsellor personas.
+
+### 1. Download or Clone the Repository
+
+Clone the repository using:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+```
+
+Then enter the project directory:
+
+```bash
+cd YOUR-REPOSITORY
+```
+
+Alternatively, click **Code → Download ZIP** on GitHub and extract the project.
+
+### 2. Get a Gemini API Key
+
+The application requires a Gemini API key to generate career advice.
+
+Create a key through **Google AI Studio**:
+
+https://aistudio.google.com/
+
+Copy your API key after creating it.
+
+> **Security Warning:** Do not add your Gemini API key to `index.html`, commit it to GitHub, or upload it anywhere publicly. This project accepts the key at runtime for demonstration purposes.
+
+### 3. Start the Application
+
+The application is contained entirely in `index.html`.
+
+For the most reliable experience, run it through a local HTTP server.
+
+#### Using Python
+
+Make sure Python is installed, then run:
+
+```bash
+python -m http.server 8000
+```
+
+Open the following address in your browser:
+
+```text
+http://localhost:8000
+```
+
+You can also use VS Code's **Live Server** extension to open `index.html`.
+
+### 4. Enter Your Gemini API Key
+
+When the application opens:
+
+1. Expand **Gemini API setup**.
+2. Paste your Gemini API key into the API key field.
+3. Verify the Gemini model shown in the model field.
+4. Keep the key only for the current browser session.
+
+The application does not require the API key to be stored inside the project files.
+
+### 5. Enter a Career Question
+
+Type a career-related question into the question box.
+
+Example:
+
+```text
+Should I prepare for placements or pursue higher studies?
+```
+
+The application also provides sample-question buttons that can automatically populate the question field.
+
+### 6. Select One or More Counsellors
+
+Choose at least one persona from the available counsellors:
+
+- **Technical Career Counsellor** — AI/ML, programming, software development, DSA, projects and technical preparation.
+- **HR & Placement Counsellor** — resumes, interviews, internships, communication and employability.
+- **Academic & Research Counsellor** — MS/M.Tech, PhD, research, certifications and higher-study preparation.
+- **Entrepreneurship Counsellor** — startups, freelancing, product ideas, business opportunities and market validation.
+
+You may select a single persona or multiple personas.
+
+### 7. Generate Career Advice
+
+Click:
+
+**Get Career Advice**
+
+The selected persona instructions and your question are combined into a structured prompt and sent to Gemini.
+
+For a single selected persona, the application displays one persona-specific response.
+
+For multiple selected personas, the same question is processed from each selected perspective and the responses are displayed separately.
+
+### 8. Compare Multiple Perspectives
+
+When multiple personas are selected, the application also provides a comparison section.
+
+It summarizes aspects such as:
+
+- Main recommendation
+- Top priority
+- Suggested next action
+
+This makes it easier to understand how different career perspectives lead to different recommendations.
+
+### 9. Try Different Questions
+
+Some useful questions to try are:
+
+```text
+Should I prepare for placements or pursue higher studies?
+```
+
+```text
+I know Python but do not have any projects. What should I do?
+```
+
+```text
+Should I become an AI Engineer, Data Scientist or Software Developer?
+```
+
+For the best demonstration, try the same question with different combinations of counsellors and compare how their recommendations differ.
+
+### 10. Handling Errors
+
+The application provides basic validation and error handling.
+
+Examples include:
+
+- No persona selected → `Please select at least one persona.`
+- Empty question → `Please enter your career-related question.`
+- Missing API key → asks you to enter the key.
+- Invalid API key → displays a Gemini API error.
+- Network/API problems → displays a user-friendly error instead of crashing.
+
+### 11. Important API-Key Limitation
+
+Because this assignment requires the complete application to run from a single HTML file, the Gemini API request is made directly from the browser.
+
+This is suitable for an educational demonstration, but it should **not** be considered a production-grade secret-management solution. A browser-based application cannot completely hide an API key from someone inspecting the browser or network requests.
+
+For this reason:
+
+- Never commit a real API key to GitHub.
+- Never place a key directly inside `index.html`.
+- Do not share screenshots or videos containing your API key.
+- Use a restricted/temporary key where appropriate for demonstrations.
+
+### 12. Clear Results and Start Again
+
+Use **Clear results** to remove the current responses and comparison table.
+
+You can then enter another question, select different personas, and generate a new set of recommendations.
+
+### Typical User Flow
+
+```text
+Open Repository
+      ↓
+Run index.html locally
+      ↓
+Enter Gemini API Key
+      ↓
+Enter Career Question
+      ↓
+Select One or More Personas
+      ↓
+Click "Get Career Advice"
+      ↓
+Gemini Generates Persona-Specific Responses
+      ↓
+View Individual Responses
+      ↓
+Compare Recommendations
+      ↓
+Try Another Question
+```
+
+### Quick Start
+
+For experienced users:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+cd YOUR-REPOSITORY
+python -m http.server 8000
+```
+
+Then visit:
+
+```text
+http://localhost:8000
+```
+
+Enter a Gemini API key in the application's setup panel, select one or more counsellors, enter a career-related question, and click **Get Career Advice**.
