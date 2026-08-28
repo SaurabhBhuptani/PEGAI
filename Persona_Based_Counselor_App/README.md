@@ -219,13 +219,14 @@ This application is a client-side, single-page AI Career Counsellor powered by t
 Clone the repository using:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git clone https://github.com/SaurabhBhuptani/PEGAI/tree/main/Persona_Based_Counselor_App.git
+cd Persona_Based_Counselor_App
 ```
 
 Then enter the project directory:
 
 ```bash
-cd YOUR-REPOSITORY
+cd Persona_Based_Counselor_App
 ```
 
 Alternatively, click **Code → Download ZIP** on GitHub and extract the project.
@@ -352,20 +353,7 @@ Examples include:
 - Invalid API key → displays a Gemini API error.
 - Network/API problems → displays a user-friendly error instead of crashing.
 
-### 11. Important API-Key Limitation
-
-Because this assignment requires the complete application to run from a single HTML file, the Gemini API request is made directly from the browser.
-
-This is suitable for an educational demonstration, but it should **not** be considered a production-grade secret-management solution. A browser-based application cannot completely hide an API key from someone inspecting the browser or network requests.
-
-For this reason:
-
-- Never commit a real API key to GitHub.
-- Never place a key directly inside `index.html`.
-- Do not share screenshots or videos containing your API key.
-- Use a restricted/temporary key where appropriate for demonstrations.
-
-### 12. Clear Results and Start Again
+### 11. Clear Results and Start Again
 
 Use **Clear results** to remove the current responses and comparison table.
 
@@ -400,8 +388,8 @@ Try Another Question
 For experienced users:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-cd YOUR-REPOSITORY
+git clone https://github.com/SaurabhBhuptani/PEGAI/tree/main/Persona_Based_Counselor_App.git
+cd Persona_Based_Counselor_App
 python -m http.server 8000
 ```
 
