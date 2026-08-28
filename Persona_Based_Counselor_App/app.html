@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Career Counsellor — Persona-Based Guidance</title>
+<meta name="description" content="Ask one career question, get answers from four distinct AI counsellor personas, powered by the Gemini API." />
+
+<!-- Fonts: a serif display face for headings, a monospace face for the Prompt Card fields (index-card / file-tab feel), a sans face for body copy and AI responses. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     DESIGN TOKENS
+     Aesthetic: a counsellor's card-catalog / personnel-file drawer.
+     Each persona is a "file" with a coloured tab and a stamped Prompt Card.
+     ========================================================================== */
+  :root{
+    --paper:        #ece6d6;
+    --paper-alt:    #e1dac4;
+    --paper-card:   #f4efe1;
+    --ink:          #23293a;
+    --ink-soft:     #5b6172;
+    --line:         #c8bd9e;
+    --line-strong:  #a99a6f;
+
+    --technical:        #2f5d8a;
+    --technical-tint:   #e4ecf3;
+    --hr:                #9c6a17;
+    --hr-tint:           #f3ead4;
+    --academic:          #2f6b4f;
+    --academic-tint:     #e2ede7;
+    --entrepreneurship:  #a13d2b;
+    --entrepreneurship-tint: #f4e3de;
+
+    --danger:     #a3271d;
+    --danger-tint:#f4e0dd;
+    --success:    #2f6b4f;
+
+    --font-display: 'Lora', Georgia, serif;
+    --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+    --font-body:    'Inter', -apple-system, Segoe UI, sans-serif;
+
+    --radius-card: 3px 14px 3px 3px;
+    --shadow-card: 0 1px 0 var(--line), 0 6px 16px -10px rgba(35,41,58,0.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #f4efe1 0%, transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  a{ color:var(--technical); }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; margin:0 0 .4em; color:var(--ink); }
+  .eyebrow{
+    font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.14em;
+    font-size:.72rem; color:var(--ink-soft);
+  }
+
+  button{ font-family:inherit; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--technical); outline-offset:2px;
+  }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 20px 80px; }
+
+  /* ---------------- Header ---------------- */
+  header.app-header{
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, var(--paper-alt), var(--paper));
+  }
+  .header-inner{ max-width:1080px; margin:0 auto; padding:38px 20px 28px; }
+  .brand-tab{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper-card); padding:4px 10px 4px 8px; border-radius:2px;
+    margin-bottom:16px;
+  }
+  .brand-tab .dot{ width:6px; height:6px; border-radius:50%; background:#e3b23c; }
+  h1.title{ font-size:clamp(1.8rem, 3.4vw, 2.6rem); max-width:18ch; }
+  .subtitle{ color:var(--ink-soft); max-width:62ch; font-size:1.02rem; }
+
+  /* ---------------- Section shell ---------------- */
+  main{ padding-top:34px; }
+  section{ margin-bottom:38px; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+  .section-head h2{ font-size:1.25rem; }
+  .hint{ color:var(--ink-soft); font-size:.88rem; }
+
+  /* ---------------- Setup (API key) ---------------- */
+  details.setup{
+    background:var(--paper-card); border:1px solid var(--line); border-radius:6px; padding:0;
+    box-shadow:var(--shadow-card);
+  }
+  details.setup > summary{
+    cursor:pointer; list-style:none; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--font-mono); font-size:.85rem; letter-spacing:.03em;
+  }
+  details.setup > summary::-webkit-details-marker{ display:none; }
+  details.setup > summary .chev{ transition:transform .15s ease; color:var(--ink-soft); }
+  details.setup[open] > summary .chev{ transform:rotate(90deg); }
+  .setup-body{ padding:4px 18px 20px; border-top:1px dashed var(--line); }
+  .setup-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+  @media (max-width:640px){ .setup-grid{ grid-template-columns:1fr; } }
+  .field label{ display:block; font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:6px; }
+  .field .key-row{ display:flex; gap:8px; }
+  input[type="text"], input[type="password"], textarea{
+    width:100%; border:1px solid var(--line-strong); border-radius:5px; padding:10px 12px;
+    background:#fffdf8; color:var(--ink); font-family:var(--font-body); font-size:.95rem;
+  }
+  .ghost-btn{
+    border:1px solid var(--line-strong); background:#fffdf8; color:var(--ink);
+    border-radius:5px; padding:0 12px; font-size:.82rem; cursor:pointer;
+  }
+  .ghost-btn:hover{ background:var(--paper-alt); }
+  .setup-note{ margin-top:12px; font-size:.85rem; color:var(--ink-soft); }
+  .setup-note strong{ color:var(--ink); }
+
+  /* ---------------- Question ---------------- */
+  textarea#question{ min-height:96px; resize:vertical; }
+  .sample-qs{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .chip{
+    font-family:var(--font-mono); font-size:.76rem; border:1px solid var(--line-strong);
+    background:var(--paper-card); border-radius:99px; padding:6px 12px; cursor:pointer; color:var(--ink);
+  }
+  .chip:hover{ background:var(--paper-alt); }
+
+  /* ---------------- Persona selection ---------------- */
+  .persona-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:18px; margin-top:6px; }
+
+  .persona-card{
+    position:relative; background:var(--paper-card); border:1px solid var(--line);
+    border-radius:var(--radius-card); box-shadow:var(--shadow-card);
+    padding:20px 16px 16px; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .persona-card:hover{ transform:translateY(-2px); }
+  .persona-card:before{
+    content:attr(data-tab); position:absolute; top:-13px; left:14px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; padding:3px 10px; border-radius:2px 2px 0 0;
+  }
+  .persona-card[data-key="technical"]:before{ background:var(--technical); }
+  .persona-card[data-key="hr"]:before{ background:var(--hr); }
+  .persona-card[data-key="academic"]:before{ background:var(--academic); }
+  .persona-card[data-key="entrepreneurship"]:before{ background:var(--entrepreneurship); }
+
+  .persona-card .p-head{ display:flex; align-items:flex-start; gap:10px; }
+  .persona-card input[type="checkbox"]{ margin-top:3px; width:16px; height:16px; accent-color:var(--ink); flex:none; }
+  .persona-card h3{ font-size:1.02rem; margin:0 0 4px; }
+  .persona-card .focus{ font-size:.85rem; color:var(--ink-soft); margin:0; }
+  .persona-card.selected{ outline:2px solid var(--ink); outline-offset:0; }
+
+  .card-fields{ margin-top:12px; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); display:grid; gap:4px; }
+  .card-fields span b{ color:var(--ink); font-weight:600; }
+
+  /* ---------------- Generate / status ---------------- */
+  .actions-row{ display:flex; align-items:center; gap:14px; margin-top:22px; flex-wrap:wrap; }
+  #generate-btn{
+    background:var(--ink); color:var(--paper-card); border:none; border-radius:6px;
+    padding:13px 26px; font-size:.95rem; font-weight:600; cursor:pointer; letter-spacing:.01em;
+    box-shadow:0 4px 0 #0f1420;
+  }
+  #generate-btn:hover:not(:disabled){ transform:translateY(1px); box-shadow:0 3px 0 #0f1420; }
+  #generate-btn:disabled{ opacity:.55; cursor:not-allowed; }
+  #reset-btn{
+    background:transparent; border:1px solid var(--line-strong); color:var(--ink);
+    border-radius:6px; padding:12px 18px; cursor:pointer; font-size:.9rem;
+  }
+  .spinner{
+    width:16px; height:16px; border-radius:50%; border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff; display:inline-block; vertical-align:-3px; margin-right:8px;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  #status{ margin-top:16px; }
+  .banner{ border-radius:6px; padding:12px 14px; font-size:.9rem; display:flex; gap:10px; align-items:flex-start; }
+  .banner.error{ background:var(--danger-tint); border:1px solid var(--danger); color:#5c150f; }
+  .banner.warn{ background:var(--hr-tint); border:1px solid var(--hr); color:#5c4210; }
+  .banner.empty{ background:var(--paper-card); border:1px dashed var(--line-strong); color:var(--ink-soft); }
+
+  /* ---------------- Results ---------------- */
+  #results-section{ display:none; }
+  .results-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; }
+  .response-card{
+    background:var(--paper-card); border:1px solid var(--line); border-radius:var(--radius-card);
+    box-shadow:var(--shadow-card); padding:20px 18px; border-top:6px solid var(--ink);
+  }
+  .response-card[data-key="technical"]{ border-top-color:var(--technical); }
+  .response-card[data-key="hr"]{ border-top-color:var(--hr); }
+  .response-card[data-key="academic"]{ border-top-color:var(--academic); }
+  .response-card[data-key="entrepreneurship"]{ border-top-color:var(--entrepreneurship); }
+  .response-card h3{ font-size:1.05rem; margin-bottom:2px; }
+  .response-card .persona-tagline{ font-size:.78rem; color:var(--ink-soft); margin-bottom:12px; font-family:var(--font-mono); }
+  .response-card .response-body p{ margin:0 0 .8em; font-size:.94rem; }
+  .response-card .response-body p:last-child{ margin-bottom:0; }
+
+  /* ---------------- Comparison ---------------- */
+  #comparison-section{ display:none; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--paper-card); box-shadow:var(--shadow-card); }
+  table.compare{ border-collapse:collapse; width:100%; min-width:560px; font-size:.88rem; }
+  table.compare th, table.compare td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.compare thead th{ font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.05em; font-size:.72rem; color:var(--ink-soft); border-bottom:2px solid var(--line-strong); }
+  table.compare tbody tr:last-child td{ border-bottom:none; }
+  table.compare td.aspect{ font-family:var(--font-mono); font-size:.75rem; color:var(--ink-soft); white-space:nowrap; }
+
+  /* ---------------- Footer ---------------- */
+  footer{ border-top:1px solid var(--line); margin-top:60px; padding:26px 20px; color:var(--ink-soft); font-size:.82rem; text-align:center; }
+
+  .visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <span class="brand-tab"><span class="dot"></span>Career Counsellor Files</span>
+    <h1 class="title">Ask one question. Hear from four counsellors.</h1>
+    <p class="subtitle">A persona-engineered career-guidance tool for ICT / Computer Science students. Pick one or more AI counsellor personas and see how their advice genuinely diverges — powered live by the Gemini API.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============================= SETUP: RUNTIME API KEY ============================= -->
+  <section aria-labelledby="setup-heading">
+    <details class="setup" id="setup-details">
+      <summary>
+        <span id="setup-heading">⚙ Gemini API setup <span class="hint" id="setup-summary-hint">(required before you can generate advice)</span></span>
+        <span class="chev">▸</span>
+      </summary>
+      <div class="setup-body">
+        <div class="setup-grid">
+          <div class="field">
+            <label for="api-key">Your Gemini API key</label>
+            <div class="key-row">
+              <input type="password" id="api-key" placeholder="Paste your key here" autocomplete="off" />
+              <button type="button" class="ghost-btn" id="toggle-key-visibility">Show</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="model-name">Gemini model</label>
+            <input type="text" id="model-name" value="gemini-3.5-flash" />
+          </div>
+        </div>
+        <p class="setup-note">
+          <strong>Your key is kept only in this page's memory and is not saved by this app.</strong> It is sent directly from your browser to Google's Gemini API when you click "Get Career Advice." Refreshing the page clears it. Because this is a client-side demo, the key can still be exposed through browser/network inspection — do not treat it as a production-secret mechanism, and never commit a real key to GitHub. See the README for the full security explanation.
+        </p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============================= QUESTION ============================= -->
+  <section aria-labelledby="question-heading">
+    <div class="section-head">
+      <h2 id="question-heading">1 · Your career question</h2>
+    </div>
+    <textarea id="question" placeholder="What should I focus on to become an AI Engineer?"></textarea>
+    <div class="sample-qs" id="sample-questions" aria-label="Sample questions">
+      <button type="button" class="chip">Should I prepare for placements or pursue higher studies?</button>
+      <button type="button" class="chip">I know Python but do not have any projects. What should I do?</button>
+      <button type="button" class="chip">Should I become an AI Engineer, Data Scientist or Software Developer?</button>
+    </div>
+  </section>
+
+  <!-- ============================= PERSONA SELECTION ============================= -->
+  <section aria-labelledby="persona-heading">
+    <div class="section-head">
+      <h2 id="persona-heading">2 · Choose your counsellor(s)</h2>
+      <span class="hint">Select one or several — each is built from its own Role · Audience · Context · Format · Constraints · Language.</span>
+    </div>
+    <div class="persona-grid" id="persona-grid"><!-- populated by JS --></div>
+  </section>
+
+  <!-- ============================= ACTIONS + STATUS ============================= -->
+  <section aria-labelledby="generate-heading">
+    <h2 id="generate-heading" class="visually-hidden">Generate advice</h2>
+    <div class="actions-row">
+      <button id="generate-btn" type="button">Get Career Advice</button>
+      <button id="reset-btn" type="button">Clear results</button>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+  </section>
+
+  <!-- ============================= RESULTS ============================= -->
+  <section id="results-section" aria-labelledby="results-heading">
+    <div class="section-head">
+      <h2 id="results-heading">3 · Persona responses</h2>
+    </div>
+    <div class="results-grid" id="results-grid"></div>
+  </section>
+
+  <!-- ============================= COMPARISON ============================= -->
+  <section id="comparison-section" aria-labelledby="comparison-heading">
+    <div class="section-head">
+      <h2 id="comparison-heading">4 · Compare at a glance</h2>
+    </div>
+    <div class="table-scroll">
+      <table class="compare" id="compare-table">
+        <thead><tr id="compare-head"></tr></thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Built for the Persona-Based AI Career Counsellor assignment · Prompt Card system: Role + Audience + Context + Format + Constraints + Language · Gemini API
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     1. PERSONA CONFIGURATION — single source of truth.
+     Add or edit a persona by editing this object only; every other
+     part of the app (selection UI, prompt construction, response
+     matching, comparison table) reads from here.
+     ============================================================ */
+  const PERSONAS = {
+    technical: {
+      name: "Technical Career Counsellor",
+      focus: "AI/ML, programming, software development, DSA, projects, technical career prep.",
+      role: "Senior Technical Career Counsellor specializing in AI, ML and Software Engineering.",
+      audience: "Undergraduate ICT/Computer Science students.",
+      context: "The student is interested in technology careers and needs practical guidance about technical skills, projects, preparation, and career opportunities.",
+      format: "Recommendation + Skills to Develop + Project Suggestions + Career Roadmap.",
+      constraints: "Give practical and realistic advice. Do not guarantee jobs or salaries. Avoid unsupported assumptions.",
+      language: "Simple English."
+    },
+    hr: {
+      name: "HR & Placement Counsellor",
+      focus: "Resumes, interviews, employability, recruitment, internships, communication.",
+      role: "Senior HR & Placement Counsellor specializing in campus recruitment, resumes, and interview readiness.",
+      audience: "Undergraduate ICT/Computer Science students preparing for placements and internships.",
+      context: "The student needs guidance on becoming employable — resumes, interviews, communication skills, and recruitment readiness — rather than deep technical skill-building.",
+      format: "Employability Assessment + Resume/Interview Focus Areas + Placement-Readiness Action Plan.",
+      constraints: "Do not guarantee placement, job offers, or salaries. Focus on employability signals recruiters look for, not raw technical depth. Avoid unsupported assumptions about the student's current resume.",
+      language: "Simple, professional English."
+    },
+    academic: {
+      name: "Academic & Research Counsellor",
+      focus: "MS/M.Tech, PhD, research, certifications, higher-study preparation.",
+      role: "Senior Academic & Research Counsellor specializing in higher studies (MS/M.Tech/PhD), research, and certifications.",
+      audience: "Undergraduate ICT/Computer Science students considering higher education or research paths.",
+      context: "The student wants to know whether and how to pursue postgraduate study, research exposure, or certifications alongside or instead of industry entry.",
+      format: "Academic Fit Assessment + Research/Certification Suggestions + Higher-Study Roadmap.",
+      constraints: "Do not guarantee admission to any program. Avoid overstating the value of any single certification. Be realistic about the time and effort research and higher studies require.",
+      language: "Simple English with academic terms explained plainly."
+    },
+    entrepreneurship: {
+      name: "Entrepreneurship Counsellor",
+      focus: "Startups, freelancing, product ideas, market validation, business opportunities.",
+      role: "Senior Entrepreneurship & Startup Counsellor specializing in student ventures, freelancing, and early product validation.",
+      audience: "Undergraduate ICT/Computer Science students exploring startups, freelancing, or independent product-building.",
+      context: "The student wants to know whether an idea, freelance path, or startup is worth pursuing, and what to try first.",
+      format: "Opportunity Assessment + Validation Steps + First Actions to Test the Idea.",
+      constraints: "Do not guarantee business success or funding. Do not encourage dropping out of studies. Emphasize low-cost validation before big commitments.",
+      language: "Simple, motivating English."
+    }
+  };
+  const PERSONA_ORDER = ["technical", "hr", "academic", "entrepreneurship"];
+  const DEFAULT_MODEL = "gemini-3.5-flash";
+
+  /* ============================================================
+     2. DOM REFERENCES
+     ============================================================ */
+  const el = {
+    apiKey: document.getElementById("api-key"),
+    toggleKey: document.getElementById("toggle-key-visibility"),
+    modelName: document.getElementById("model-name"),
+    setupDetails: document.getElementById("setup-details"),
+    question: document.getElementById("question"),
+    sampleQs: document.getElementById("sample-questions"),
+    personaGrid: document.getElementById("persona-grid"),
+    generateBtn: document.getElementById("generate-btn"),
+    resetBtn: document.getElementById("reset-btn"),
+    status: document.getElementById("status"),
+    resultsSection: document.getElementById("results-section"),
+    resultsGrid: document.getElementById("results-grid"),
+    comparisonSection: document.getElementById("comparison-section"),
+    compareHead: document.getElementById("compare-head"),
+    compareBody: document.getElementById("compare-body")
+  };
+
+  /* ============================================================
+     3. CUSTOM ERROR TYPE — carries a user-safe message
+     ============================================================ */
+  function GeminiError(kind, message){
+    this.kind = kind;
+    this.message = message;
+  }
+
+  /* ============================================================
+     4. BUILD PERSONA SELECTION UI
+     ============================================================ */
+  function renderPersonaGrid(){
+    el.personaGrid.innerHTML = "";
+    PERSONA_ORDER.forEach((key, idx) => {
+      const p = PERSONAS[key];
+      const card = document.createElement("div");
+      card.className = "persona-card";
+      card.dataset.key = key;
+      card.dataset.tab = "FILE 0" + (idx + 1);
+      card.setAttribute("role", "group");
+      card.setAttribute("aria-labelledby", "persona-name-" + key);
+
+      card.innerHTML =
+        '<div class="p-head">' +
+          '<input type="checkbox" id="persona-check-' + key + '" data-key="' + key + '" />' +
+          '<div>' +
+            '<h3 id="persona-name-' + key + '"><label for="persona-check-' + key + '">' + escapeHtml(p.name) + '</label></h3>' +
+            '<p class="focus">' + escapeHtml(p.focus) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-fields">' +
+          '<span><b>Role:</b> ' + escapeHtml(truncate(p.role, 70)) + '</span>' +
+          '<span><b>Format:</b> ' + escapeHtml(truncate(p.format, 70)) + '</span>' +
+        '</div>';
+
+      card.addEventListener("click", (e) => {
+        if (e.target.tagName.toLowerCase() === "input") return; // checkbox handles itself
+        const cb = card.querySelector("input[type=checkbox]");
+        cb.checked = !cb.checked;
+        syncCardState(card, cb.checked);
+      });
+      card.querySelector("input[type=checkbox]").addEventListener("change", (e) => {
+        syncCardState(card, e.target.checked);
+      });
+
+      el.personaGrid.appendChild(card);
+    });
+  }
+
+  function syncCardState(card, isSelected){
+    card.classList.toggle("selected", isSelected);
+  }
+
+  function getSelectedPersonaKeys(){
+    return PERSONA_ORDER.filter(key => {
+      const cb = document.getElementById("persona-check-" + key);
+      return cb && cb.checked;
+    });
+  }
+
+  /* ============================================================
+     5. SAMPLE QUESTIONS
+     ============================================================ */
+  el.sampleQs.addEventListener("click", (e) => {
+    if (e.target.classList.contains("chip")) {
+      el.question.value = e.target.textContent;
+      el.question.focus();
+    }
+  });
+
+  /* ============================================================
+     6. API KEY VISIBILITY TOGGLE
+     ============================================================ */
+  el.toggleKey.addEventListener("click", () => {
+    const isPassword = el.apiKey.type === "password";
+    el.apiKey.type = isPassword ? "text" : "password";
+    el.toggleKey.textContent = isPassword ? "Hide" : "Show";
+  });
+
+  /* ============================================================
+     7. PROMPT CONSTRUCTION
+     Role + Audience + Context + Format + Constraints + Language + Question -> Final Prompt
+     ============================================================ */
+  function buildPrompt(selectedKeys, question){
+    let prompt =
+      "You are simulating multiple distinct career-counselling personas inside a student platform called " +
+      "\"AI Career Counsellor\". For EACH persona listed below, answer the student's question strictly from " +
+      "that persona's own point of view, applying that persona's Role, Audience, Context, Format, Constraints " +
+      "and Language. Personas must NOT imitate each other, must NOT merge into one generic answer, and must " +
+      "stay meaningfully different in priorities, vocabulary, structure and recommended actions. If the " +
+      "question is unrelated to career counselling, say so plainly for that persona instead of guessing.\n\n";
+
+    selectedKeys.forEach((key, i) => {
+      const p = PERSONAS[key];
+      prompt +=
+        "PERSONA " + (i + 1) + " — " + p.name + "\n" +
+        "Role: " + p.role + "\n" +
+        "Audience: " + p.audience + "\n" +
+        "Context: " + p.context + "\n" +
+        "Format: " + p.format + "\n" +
+        "Constraints: " + p.constraints + "\n" +
+        "Language: " + p.language + "\n\n";
+    });
+
+    prompt +=
+      'STUDENT QUESTION:\n"' + question + '"\n\n' +
+      "For EACH persona above, produce one entry containing: the persona's exact name (copied exactly as given), " +
+      "a full response written strictly according to that persona's Role/Audience/Context/Format/Constraints/Language, " +
+      "a one-line mainRecommendation, a one-line priority describing what this persona cares about most for this " +
+      "question, and a one-line suggestedAction naming the single next concrete step. Return ONLY valid JSON with this " +
+      "shape: {\"responses\":[{\"persona\":\"exact persona name\",\"response\":\"...\",\"mainRecommendation\":\"...\",\"priority\":\"...\",\"suggestedAction\":\"...\"}]}. " +
+      "Do not wrap the JSON in Markdown fences. Include exactly one response object for each selected persona. " +
+      "Avoid guarantees about jobs, salaries, admissions or outcomes. Do not answer as a generalist — every response " +
+      "must stay inside its own persona's lane.";
+
+    return prompt;
+  }
+
+  /* ============================================================
+     8. GEMINI API CALL (single request for all selected personas)
+     ============================================================ */
+  async function callGemini(promptText){
+    const apiKey = el.apiKey.value.trim();
+    const model = el.modelName.value.trim() || DEFAULT_MODEL;
+
+    if (!apiKey) {
+      throw new GeminiError("missing_key", "Please enter your Gemini API key in the setup panel above.");
+    }
+
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/" +
+      encodeURIComponent(model) + ":generateContent?key=" + encodeURIComponent(apiKey);
+
+    const requestBody = {
+      contents: [{ role: "user", parts: [{ text: promptText }] }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 3000,
+        response_mime_type: "application/json"
+      }
+    };
+
+    let res;
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody)
+      });
+    } catch (networkErr) {
+      throw new GeminiError("network", "Could not reach the Gemini API. Check your internet connection and try again.");
+    }
+
+    if (res.status === 429) {
+      throw new GeminiError("rate_limit", "Gemini is rate-limiting requests right now. Wait a moment and try again.");
+    }
+    if (res.status === 404) {
+      throw new GeminiError("model_not_found", "The selected Gemini model was not found or is unavailable. Try a current model such as gemini-3.5-flash.");
+    }
+    if (res.status === 400 || res.status === 403 || res.status === 401) {
+      let detail = "";
+      try {
+        const errJson = await res.json();
+        detail = (errJson && errJson.error && errJson.error.message) || "";
+      } catch (_) { /* ignore parse failure of error body */ }
+      throw new GeminiError("invalid_key", "Gemini rejected the request" + (detail ? ": " + detail : ".") + " Double-check your API key and model name.");
+    }
+    if (!res.ok) {
+      throw new GeminiError("api_error", "Gemini API returned an error (status " + res.status + "). Please try again.");
+    }
+
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      throw new GeminiError("bad_format", "Gemini's response could not be read. Please try again.");
+    }
+
+    const candidate = data && data.candidates && data.candidates[0];
+    const parts = candidate && candidate.content && candidate.content.parts;
+    const textPart = Array.isArray(parts) ? parts.map(p => p.text || "").join("") : "";
+
+    if (!textPart.trim()) {
+      throw new GeminiError("empty_response", "Gemini returned an empty response. Try rephrasing your question, or try again.");
+    }
+    return textPart;
+  }
+
+  /* ============================================================
+     9. RESPONSE PARSING — robust against minor formatting drift
+     ============================================================ */
+  function parseGeminiResponses(rawText){
+    let cleaned = rawText.trim();
+    cleaned = cleaned.replace(/^```json\s*/i, "").replace(/^```\s*/, "").replace(/```\s*$/, "");
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (e) {
+      throw new GeminiError("bad_format", "Gemini returned a response in an unexpected format. Please try again.");
+    }
+
+    if (!parsed || !Array.isArray(parsed.responses) || parsed.responses.length === 0) {
+      throw new GeminiError("bad_format", "Gemini did not return any persona responses. Please try again.");
+    }
+    return parsed.responses;
+  }
+
+  /* Match each selected persona key to its response entry by name. */
+  function matchResponsesToPersonas(selectedKeys, responses){
+    const matched = [];
+    const missing = [];
+    selectedKeys.forEach((key, idx) => {
+      const p = PERSONAS[key];
+      let found = responses.find(r => typeof r.persona === "string" && r.persona.toLowerCase().includes(p.name.toLowerCase()));
+      if (!found) found = responses.find(r => p.name.toLowerCase().includes((r.persona || "").toLowerCase()));
+      if (!found) found = responses[idx]; // positional fallback
+      if (found && found.response) {
+        matched.push({ key: key, persona: p, data: found });
+      } else {
+        missing.push(p.name);
+      }
+    });
+    return { matched: matched, missing: missing };
+  }
+
+  /* ============================================================
+     10. RENDERING — results grid + comparison table
+     Text is inserted via textContent only (no raw HTML from the model).
+     ============================================================ */
+  function renderResults(matched){
+    el.resultsGrid.innerHTML = "";
+    matched.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "response-card";
+      card.dataset.key = item.key;
+
+      const h3 = document.createElement("h3");
+      h3.textContent = item.persona.name;
+      card.appendChild(h3);
+
+      const tagline = document.createElement("div");
+      tagline.className = "persona-tagline";
+      tagline.textContent = item.persona.focus;
+      card.appendChild(tagline);
+
+      const body = document.createElement("div");
+      body.className = "response-body";
+      String(item.data.response || "").split(/\n\s*\n/).forEach(paragraph => {
+        const trimmed = paragraph.trim();
+        if (!trimmed) return;
+        const p = document.createElement("p");
+        p.textContent = trimmed;
+        body.appendChild(p);
+      });
+      card.appendChild(body);
+
+      el.resultsGrid.appendChild(card);
+    });
+    el.resultsSection.style.display = matched.length ? "block" : "none";
+  }
+
+  function renderComparison(matched){
+    el.compareHead.innerHTML = "";
+    el.compareBody.innerHTML = "";
+
+    if (matched.length < 1) {
+      el.comparisonSection.style.display = "none";
+      return;
+    }
+
+    const thAspect = document.createElement("th");
+    thAspect.textContent = "Aspect";
+    el.compareHead.appendChild(thAspect);
+    matched.forEach(item => {
+      const th = document.createElement("th");
+      th.textContent = item.persona.name;
+      el.compareHead.appendChild(th);
+    });
+
+    const rows = [
+      { label: "Main recommendation", field: "mainRecommendation" },
+      { label: "Top priority", field: "priority" },
+      { label: "Suggested next action", field: "suggestedAction" }
+    ];
+
+    rows.forEach(row => {
+      const tr = document.createElement("tr");
+      const tdLabel = document.createElement("td");
+      tdLabel.className = "aspect";
+      tdLabel.textContent = row.label;
+      tr.appendChild(tdLabel);
+
+      matched.forEach(item => {
+        const td = document.createElement("td");
+        td.textContent = item.data[row.field] || "—";
+        tr.appendChild(td);
+      });
+      el.compareBody.appendChild(tr);
+    });
+
+    el.comparisonSection.style.display = matched.length > 1 ? "block" : "none";
+  }
+
+  /* ============================================================
+     11. STATUS / LOADING / ERROR HELPERS
+     ============================================================ */
+  function clearStatus(){ el.status.innerHTML = ""; }
+
+  function showBanner(kind, message){
+    clearStatus();
+    const div = document.createElement("div");
+    div.className = "banner " + kind;
+    div.textContent = message;
+    el.status.appendChild(div);
+  }
+
+  function setLoading(isLoading){
+    el.generateBtn.disabled = isLoading;
+    el.generateBtn.innerHTML = isLoading
+      ? '<span class="spinner" aria-hidden="true"></span>Consulting counsellors…'
+      : "Get Career Advice";
+  }
+
+  function clearResults(){
+    el.resultsGrid.innerHTML = "";
+    el.compareHead.innerHTML = "";
+    el.compareBody.innerHTML = "";
+    el.resultsSection.style.display = "none";
+    el.comparisonSection.style.display = "none";
+    clearStatus();
+  }
+
+  /* ============================================================
+     12. UTILITIES
+     ============================================================ */
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function truncate(str, max){
+    return str.length > max ? str.slice(0, max - 1).trim() + "…" : str;
+  }
+
+  /* ============================================================
+     13. MAIN GENERATE FLOW
+     ============================================================ */
+  async function handleGenerate(){
+    const question = el.question.value.trim();
+    const selectedKeys = getSelectedPersonaKeys();
+
+    if (selectedKeys.length === 0) {
+      showBanner("error", "Please select at least one persona.");
+      return;
+    }
+    if (!question) {
+      showBanner("error", "Please enter your career-related question.");
+      return;
+    }
+    if (!el.apiKey.value.trim()) {
+      el.setupDetails.open = true;
+      showBanner("error", "Please enter your Gemini API key in the setup panel above.");
+      return;
+    }
+
+    clearStatus();
+    setLoading(true);
+
+    try {
+      const prompt = buildPrompt(selectedKeys, question);
+      const rawText = await callGemini(prompt);
+      const responses = parseGeminiResponses(rawText);
+      const { matched, missing } = matchResponsesToPersonas(selectedKeys, responses);
+
+      if (matched.length === 0) {
+        showBanner("error", "Gemini's response didn't match any selected persona. Please try again.");
+        el.resultsSection.style.display = "none";
+        el.comparisonSection.style.display = "none";
+        return;
+      }
+
+      renderResults(matched);
+      renderComparison(matched);
+
+      if (missing.length > 0) {
+        showBanner("warn", "Note: no response was returned for " + missing.join(", ") + ". Showing the personas that did come back.");
+      } else {
+        clearStatus();
+      }
+
+      el.resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      const message = (err && err.message) ? err.message : "Something went wrong. Please try again.";
+      showBanner("error", message);
+      el.resultsSection.style.display = "none";
+      el.comparisonSection.style.display = "none";
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  /* ============================================================
+     14. EVENT WIRING
+     ============================================================ */
+  el.generateBtn.addEventListener("click", handleGenerate);
+  el.resetBtn.addEventListener("click", () => {
+    clearResults();
+  });
+
+  /* ============================================================
+     15. INIT
+     ============================================================ */
+  renderPersonaGrid();
+})();
+</script>
+</body>
+</html>
