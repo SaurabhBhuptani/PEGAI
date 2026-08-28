@@ -2,8 +2,6 @@
 
 A single-page web app where a student asks one career question and receives answers from up to four distinct AI counsellor personas — each with its own Role, Audience, Context, Format, Constraints, and Language — generated live by the **Gemini API**.
 
----
-
 ## 1. Project Overview
 
 This project fulfils an assignment brief requiring a web-based AI Persona Application built on the Gemini API, where selecting a different persona produces a **meaningfully different** answer to the same question — not just a relabeled one. The whole implementation (HTML, CSS, JavaScript) lives in a single `index.html` file, as required.
@@ -39,7 +37,28 @@ Students often ask career questions ("Should I do placements or higher studies?"
 | **Academic & Research Counsellor** | MS/M.Tech, PhD, research, certifications, higher-study preparation |
 | **Entrepreneurship Counsellor** | Startups, freelancing, product ideas, market validation, business opportunities |
 
-## 6. Six-Element Prompt Cards
+## 6. Screenshots
+
+### Homepage
+![Homepage Screenshot](assets/homepage.png)
+
+### Persona Selection
+![Persona Selection](assets/persona-selection.png)
+
+### Single Persona Response
+![Single Persona Response](assets/single-persona-response.png)
+
+### Multiple Persona Responses
+![Multiple Persona Responses](assets/multiple-persona-responses.png)
+
+### Comparison
+![Persona Comparison](assets/persona-comparison.png)
+
+## Demo
+
+[Watch Demo Video](YOUR_DEMO_VIDEO_LINK)
+
+## 7. Six-Element Prompt Cards
 
 ### Persona 1 — Technical Career Counsellor
 - **Role:** Senior Technical Career Counsellor specializing in AI, ML and Software Engineering.
@@ -75,7 +94,7 @@ Students often ask career questions ("Should I do placements or higher studies?"
 
 All four cards live in one place in the code — the `PERSONAS` object near the top of the `<script>` block in `index.html` — so they're easy to edit or extend.
 
-## 7. Persona Differentiation Strategy
+## 8. Persona Differentiation Strategy
 
 Differentiation is enforced at three levels:
 
@@ -83,7 +102,7 @@ Differentiation is enforced at three levels:
 2. **Structural level** — each persona has its own `Format`, so a Technical answer is shaped as a roadmap while an HR answer is shaped as an employability assessment — the *shape* of the answer differs, not just the wording.
 3. **Verification level** — the frontend requests a `priority` and `mainRecommendation` field per persona and renders them side by side in the comparison table, making it visually obvious when two personas actually agree vs. disagree.
 
-## 8. Prompt Construction Flow
+## 9. Prompt Construction Flow
 
 ```
 Role
@@ -109,7 +128,7 @@ Structured JSON Response
 Parsed → Rendered per persona + Comparison table
 ```
 
-## 9. Multi-Persona API Strategy
+## 10. Multi-Persona API Strategy
 
 When multiple personas are selected, the app does **not** fire one API call per persona. Instead:
 
@@ -120,19 +139,19 @@ When multiple personas are selected, the app does **not** fire one API call per 
 
 This keeps the app to **one Gemini request regardless of how many personas are selected**, minimizing latency and rate-limit usage.
 
-## 10. Technology Used
+## 11. Technology Used
 
 - Vanilla HTML5, CSS3, JavaScript (ES6+) — no framework, no build step.
 - Google Fonts (Lora, IBM Plex Mono, Inter) via CDN `<link>`.
 - Gemini API (`generateContent` endpoint) called directly via `fetch`.
 
-## 11. Gemini API Integration
+## 12. Gemini API Integration
 
 - Endpoint: `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}`
 - Default model: `gemini-3.5-flash` — editable in the "Gemini model" field in the setup panel, since Google periodically renames/retires model versions. If a model name stops working, check Google's current model list and type the new name into that field.
 - Called directly from the browser (`fetch`), with the API key supplied at runtime by the student — no key is ever stored in the code or repository.
 
-## 12. Application Architecture
+## 13. Application Architecture
 
 ```
 User
@@ -157,27 +176,6 @@ Question Input ──► Persona Selection ──► Read Prompt Cards
                                              ▼
                                      User Evaluation
 ```
-
-## 13. Screenshots
-
-### Homepage
-![Homepage Screenshot](assets/homepage.png)
-
-### Persona Selection
-![Persona Selection](assets/persona-selection.png)
-
-### Single Persona Response
-![Single Persona Response](assets/single-persona-response.png)
-
-### Multiple Persona Responses
-![Multiple Persona Responses](assets/multiple-persona-responses.png)
-
-### Comparison
-![Persona Comparison](assets/persona-comparison.png)
-
-## Demo
-
-[Watch Demo Video](YOUR_DEMO_VIDEO_LINK)
 
 ## 14. Comparison Functionality
 
