@@ -54,8 +54,7 @@ Students often ask career questions ("Should I do placements or higher studies?"
 ### Comparison
 ![Persona Comparison](assets/persona-comparison.png)
 
-## Demo
-
+### Demo
 [Watch Demo Video](YOUR_DEMO_VIDEO_LINK)
 
 ## 7. Six-Element Prompt Cards
