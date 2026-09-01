@@ -40,19 +40,20 @@ Students often ask career questions ("Should I do placements or higher studies?"
 ## 6. Screenshots
 
 ### Homepage
-![Homepage Screenshot](assets/homepage.png)
+![Homepage Screenshot](images/home1.png)
+![Homepage Screenshot](images/home2.png)
 
 ### Persona Selection
-![Persona Selection](assets/persona-selection.png)
+![Persona Selection](images/persona1.png)
 
 ### Single Persona Response
-![Single Persona Response](assets/single-persona-response.png)
+![Single Persona Response](images/persona2.png)
 
 ### Multiple Persona Responses
-![Multiple Persona Responses](assets/multiple-persona-responses.png)
+![Multiple Persona Responses](images/persona3.png)
 
 ### Comparison
-![Persona Comparison](assets/persona-comparison.png)
+![Persona Comparison](images/comparison1.png)
 
 ### Demo
 [Watch Demo Video](YOUR_DEMO_VIDEO_LINK)
