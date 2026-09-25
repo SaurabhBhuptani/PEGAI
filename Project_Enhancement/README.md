@@ -236,7 +236,7 @@ Generated Image
 
 ---
 
-# 🧠 Prompts Used
+# 📖 Prompts Used
 
 ## Card 1: Persona & Role-Based Prompting
 
