@@ -236,6 +236,151 @@ Generated Image
 
 ---
 
+# 🧠 Prompts Used
+
+## Card 1: Persona & Role-Based Prompting
+
+**Concept:** Assigns a clear, expert persona with strict operational guardrails to guide structural and architectural decisions.
+
+> ### System & User Prompt
+> **Role:** You are a Senior Python Architect specializing in Streamlit UI applications, LangGraph stateful agents, and production Gemini API integrations.
+> 
+> **Context & Architecture:**
+> You are updating an existing beginner-friendly Python + Streamlit chatbot.
+> - **Stack:** Python, Streamlit, LangGraph, LangChain, `langchain-google-genai`, Google Gemini API, SQLite (`langgraph-checkpoint-sqlite`), `.env`.
+> - **Files:** `app.py`, `backend.py`.
+> 
+> **Task Overview:**
+> Enhance the application without rewriting the core architecture, dropping tables, or adding heavy abstractions (e.g., no vector DBs, FastAPI, or React).
+> 
+> **Core Deliverables:**
+> 1. **Two AI Modes:** Implement a Streamlit mode selector (General Assistant vs Code Assistant). Use dynamic prompt composition.
+> 2. **Chat Search:** Implement local case-insensitive search across SQLite thread checkpoints and title data.
+> 3. **Chat Deletion:** Safely delete specified threads from SQLite based on installed `langgraph-checkpoint-sqlite` schema without affecting other threads.
+> 4. **Code & Text File Context:** Support `.py`, `.js`, `.sql`, `.json`, `.txt`, etc. Send context only in Code Mode. Enable code download buttons.
+> 5. **Image Multimodal Input:** Accept PNG/JPG/WEBP, render previews, and pass multimodal payloads to Gemini.
+> 6. **Image Generation Stub:** Clearly label image generation as unconfigured/unavailable without adding paid dependencies.
+> 
+> **Output Requirements:** Show the project tree, list modified files, provide complete replacement code for `app.py` and `backend.py`, specify `pip` install commands, and provide a test checklist.
+
+## Card 2: Chain-of-Thought (CoT) Prompting
+
+**Concept:** Enforces step-by-step analytical reasoning before generating any executable code, preventing database schema mismatches and state bugs.
+
+> ### User Prompt
+> Please enhance the existing Streamlit + LangGraph chatbot codebase by completing the following logical reasoning steps in order before outputting any replacement code:
+> 
+> **Step 1: Database & Checkpoint Inspection Logic**
+> - Inspect standard `langgraph-checkpoint-sqlite` table structures (e.g., `checkpoints`, `writes`).
+> - Determine the safest SQL queries for searching thread IDs and deleting a selected `thread_id` without corrupting active storage or guessing non-existent tables.
+> 
+> **Step 2: State Management & Lifecycle Planning**
+> - Trace the Streamlit session state workflow when a user deletes the active chat thread.
+> - Plan how to reset state, assign a new UUID, and force an immediate sidebar re-render.
+> 
+> **Step 3: Dynamic Prompt Pipeline Design**
+> - Formulate the composition pipeline:
+>   `SYSTEM INSTRUCTIONS (Mode-based)` + `FILE CONTEXT (Code Mode only)` + `IMAGE PAYLOAD` + `CONVERSATION HISTORY` + `USER PROMPT`.
+> - Ensure uploaded file text never overrides base system instructions.
+> 
+> **Step 4: Implementation & Verification**
+> - Write complete, drop-in replacement files for `app.py` and `backend.py`.
+> - Include exact terminal commands, database migration notes, and a checklist for manual verification.
+
+## Card 3: Few-Shot / Exemplar-Driven Prompting
+
+**Concept:** Provides code snippets and structural examples to dictate exact coding patterns and design syntax.
+
+> ### User Prompt
+> Update `app.py` and `backend.py` to add dynamic AI modes, chat search/deletion, and file handling. Follow the structural patterns shown in the exemplars below.
+> 
+> #### Exemplar 1: Dynamic Prompt Composition
+> ```python
+> def build_system_prompt(mode: str, file_text: str = None) -> str:
+>     base_prompts = {
+>         "General Assistant": "You are a helpful, accurate, clear assistant. Use Markdown.",
+>         "Code Assistant": "You are an experienced programming tutor. Analyze code, explain fixes, and return revised snippets."
+>     }
+>     system_str = base_prompts.get(mode, base_prompts["General Assistant"])
+>     if mode == "Code Assistant" and file_text:
+>         system_str += f"\n\n--- ATTACHED FILE CONTEXT ---\n{file_text}\n--- END ATTACHMENT ---"
+>     return system_str
+> ```
+> 
+> #### Exemplar 2: Safe SQLite Thread Deletion
+> ```python
+> import sqlite3
+> def delete_thread_checkpoint(db_path: str, thread_id: str) -> None:
+>     with sqlite3.connect(db_path) as conn:
+>         cursor = conn.cursor()
+>         cursor.execute("DELETE FROM checkpoints WHERE thread_id = ?", (thread_id,))
+>         cursor.execute("DELETE FROM writes WHERE thread_id = ?", (thread_id,))
+>         conn.commit()
+> ```
+> 
+> Apply these patterns across the entire codebase to implement:
+> 1. General vs Code Assistant mode toggle.
+> 2. Sidebar search and confirmation-gated chat deletion.
+> 3. Code/text file attachment reading and code block download buttons (`st.download_button`).
+> 4. PNG/JPG/WEBP image preview and multimodal Gemini query dispatch.
+
+## Card 4: Constraint-Based & Anti-Pattern (Negative) Prompting
+
+**Concept:** Defines explicit negative constraints to eliminate unwanted dependencies, hallucinations, and framework rewrites.
+
+> ### User Prompt
+> Modify the Python + Streamlit + LangGraph chatbot while adhering strictly to the following **HARD CONSTRAINTS** and **PROHIBITIONS**:
+> 
+> **STRICT PROHIBITIONS:**
+> - **DO NOT** replace Streamlit with FastAPI, Flask, Django, or React.
+> - **DO NOT** add a vector database (Chroma, FAISS, Pinecone) or complex RAG framework.
+> - **DO NOT** hardcode guessed SQLite table or column names; verify or use safe standard queries for `langgraph-checkpoint-sqlite`.
+> - **DO NOT** claim or hallucinate that uploaded user code was executed, compiled, tested, or benchmarked.
+> - **DO NOT** add paid third-party dependencies for image generation. Display an unconfigured warning message in the UI if requested.
+> - **DO NOT** rewrite working streaming or session-state functionality.
+> 
+> **REQUIRED ENHANCEMENTS:**
+> 1. Mode selector (`General Assistant` vs `Code Assistant`) altering Gemini prompts dynamically.
+> 2. Sidebar search and single-thread deletion in SQLite.
+> 3. Code file text context extraction + Image preview and multimodal prompt handling.
+> 4. Download button for generated/revised code blocks.
+> 5. Comprehensive Streamlit error handling for quota, API key, and parsing issues.
+> 
+> Output the final directory tree, modified file list, complete code for all changed files, installation commands, and test steps.
+
+## Card 5: Specification-Driven & Output Schema Prompting
+
+**Concept:** Leverages a strict contract schema matrix to guarantee complete, production-ready deliverables.
+
+> ### User Prompt
+> Refactor the Streamlit chatbot according to the technical requirements specified below.
+> 
+> ### TECHNICAL SPECIFICATIONS
+> 
+> | Feature | Component | Requirement |
+> | :--- | :--- | :--- |
+> | **AI Modes** | Sidebar Radio | `General Assistant` (prose/clear) vs `Code Assistant` (tutor/code-focused) |
+> | **Search** | Sidebar Text Input | Case-insensitive SQLite search matching thread IDs, titles, and messages |
+> | **Deletion** | Sidebar Button | Confirmation-gated thread deletion; auto-creates clean thread if current |
+> | **File Input** | File Uploader | Validates and reads code/text (<2MB); attached only in `Code Assistant` mode |
+> | **Vision** | File Uploader | Accepts PNG/JPG/WEBP; passes image stream to Gemini multimodal API |
+> | **Code Output** | Streamlit Main | Code downloads via `st.download_button` with preserved filenames |
+> 
+> ---
+> 
+> ### MANDATORY OUTPUT STRUCTURE
+> Provide your response strictly adhering to the following Markdown sections:
+> 
+> 1. **Final Project Tree**
+> 2. **List of Changed Files**
+> 3. **Complete Code Blocks** (No shortcuts or placeholders in `app.py` or `backend.py`)
+> 4. **Pip Commands** (`pip install ...`)
+> 5. **Run Command** (`streamlit run app.py`)
+> 6. **Database Migration Notes**
+> 7. **Manual Test Checklist**
+
+---
+
 # 🏗️ Architecture
 
 ```text
