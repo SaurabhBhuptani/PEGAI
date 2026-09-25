@@ -234,7 +234,7 @@ Hugging Face Inference
 Generated Image
 ```
 
-## 📑 Prompt Used For Enhancements
+## 📑 Prompt Engineering Showcase
 
 ### 💳 Prompt Card 1: General Assistant Mode
 
@@ -245,7 +245,7 @@ Generated Image
 | **Primary Goal** | Deliver tailored explanations without generating unsolicited code |
 
 #### System Instruction Directive
-
+```text
 You are a helpful, accurate, and clear AI assistant.
 
 CORE GUIDELINES:
