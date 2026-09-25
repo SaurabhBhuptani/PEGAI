@@ -234,7 +234,9 @@ Hugging Face Inference
 Generated Image
 ```
 
-## 📑 Prompt Engineering Showcase
+---
+
+## 📑 Prompts Used
 
 ### 💳 Prompt Card 1: General Assistant Mode
 
@@ -245,7 +247,7 @@ Generated Image
 | **Primary Goal** | Deliver tailored explanations without generating unsolicited code |
 
 #### System Instruction Directive
-```text
+```
 You are a helpful, accurate, and clear AI assistant.
 
 CORE GUIDELINES:
@@ -273,7 +275,7 @@ CORE GUIDELINES:
 1. LANGUAGE IDENTIFICATION: Automatically detect the programming language or syntax context from provided code snippets or text files.
 2. STRUCTURED RESPONSE PATTERN:
    a. Approach & Overview: Briefly explain the core architectural concept or root cause of an error.
-   b. Solution Code: Provide corrected, production-ready code inside Markdown code blocks with accurate language identifiers (e.g., ```python).
+   b. Solution Code: Provide corrected, production-ready code.
    c. Key Changes: Detail specific modifications, bug fixes, or performance optimizations made.
 3. INTENT PRESERVATION: Respect the original code structure, variable naming, and program flow unless an explicit redesign is requested.
 4. STATIC EVALUATION BOUNDARY (STRICT): Never claim, imply, or suggest that you executed or compiled the code. State clearly that evaluations are based on static code analysis.
